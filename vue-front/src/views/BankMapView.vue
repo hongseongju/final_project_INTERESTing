@@ -2,11 +2,10 @@
   <div>
     <h1 class="ercword">주변 은행 검색</h1>
     <div class="container custom-border">
-      <div id="map" class="map"></div>
       <div id="menu_wrap" class="bg_white">
         <div class="option">
           <div>
-            <input type="text" id="keyword" size="15" placeholder="은행명 입력" class="custom-border" />
+            <input type="text" id="keyword" size="15" placeholder="은행명 입력" class="custom-border" />  |  
             <input type="text" id="region" size="15" placeholder="지역 입력" class="custom-border" />
             <button @click="searchPlaces" class="custom-border">검색하기</button>
           </div>
@@ -15,6 +14,7 @@
         <div id="pagination"></div>
       </div>
     </div>
+    <div id="map" class="map"></div>
   </div>
 </template>
 
@@ -185,7 +185,7 @@ export default {
   display: flex;
 }
 .map {
-  width: 70%;
+  width: 60vw;
   height: 600px;
 }
 
