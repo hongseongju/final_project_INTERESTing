@@ -88,12 +88,21 @@ WSGI_APPLICATION = 'interesting_back.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+MYSQL_PASSWORD = 'interesting!'
+
+# !! data base 변경
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'interesting',
+        'USER': 'INTERESTing',
+        'PASSWORD': MYSQL_PASSWORD,
+        'HOST': 'localhost', # MySQL 호스트
+        'PORT': '3306',      # MySQL 포트 (기본값은 3306)
     }
 }
+
+
 
 
 # Password validation

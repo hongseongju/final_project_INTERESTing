@@ -19,7 +19,8 @@ class CustomRegisterSerializer(RegisterSerializer):
       'username': self.validated_data.get('username', ''),
       'password1': self.validated_data.get('password1', ''),
       'nickname': self.validated_data.get('nickname', ''),
-      'email' : self.validated_data.get('email', '')
+      'email' : self.validated_data.get('email', ''),
+      'cash' : self.validated_data.get('cash', ''),
  }
 
 
@@ -40,3 +41,5 @@ class CustomUserDetailsSerializer(UserDetailsSerializer):
       model = UserModel
       fields = ('pk', *extra_fields)
       read_only_fields = ('email',)
+    if hasattr(UserModel, 'cash'):
+      extra_fields.append('cash')
