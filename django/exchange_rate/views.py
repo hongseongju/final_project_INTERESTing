@@ -3,8 +3,9 @@ from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .models import Exchange
+# from rest_framework import viewsets  #  CRUD 작업 처리 위한 패키지
+from .serializers import ExchangeSerializer
 # Create your views here.
-
 
 BASE_URL = 'https://www.koreaexim.go.kr/site/program/financial/exchangeJSON'
 # !! env로 이동 필요
@@ -16,6 +17,7 @@ def exchage_rate(request):
     params = {
         'authkey': EXCHAGE_API_KEY,
         'data': 'AP01',
+
     }
     response = requests.get(BASE_URL, params=params).json()
     
@@ -35,6 +37,10 @@ def exchage_rate(request):
                                 cur_unit=li['cur_unit'],
                                 defaults=save_data
                             )
-
+    rate = Exchange.objects.all()
+    serializer = ExchangeSerializer(data=rate, many=True)
+    # 
     # safe=False: 보통 JsonREsponse는 안전한 응답만 처리되어서 필요
-    return Response({ 'message': "exchage save okay!"})
+    return Response(serializer.data)
+
+#{ 'message': "exchage save okay!"}
