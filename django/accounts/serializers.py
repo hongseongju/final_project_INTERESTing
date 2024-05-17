@@ -9,10 +9,12 @@ class CustomRegisterSerializer(RegisterSerializer):
  # 필요한 필드들을 추가합니다.
   email = serializers.EmailField(required=True)
   nickname = serializers.CharField(
-  required=False,
+  required=True,
   allow_blank=True,
   max_length=255
  )
+  cash = serializers.IntegerField(required=True)
+  
  # 해당 필드도 저장 시 함께 사용하도록 설정합니다.
   def get_cleaned_data(self):
     return {

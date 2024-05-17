@@ -8,6 +8,7 @@ const API_URL = 'http://localhost:8000/dj-rest-auth/';
 export const useAuthStore = defineStore('auth', () => {
   const user = ref(null);
   const token = ref(null);
+  const nickname = ref(null);
   const router = useRouter()
 
   const signup = (payload) => {
@@ -65,6 +66,7 @@ export const useAuthStore = defineStore('auth', () => {
     return axios.get(`${API_URL}user/`)
     .then(response => {
       user.value = response.data;
+      console.log(response.data)
     })
     .catch(error => {
       console.error(error);
@@ -134,5 +136,5 @@ export const useAuthStore = defineStore('auth', () => {
     }
   };
 
-  return { user, token, signup, login, logout, fetchUserDetails, changePassword, resetPassword, resetPasswordConfirm, getArticles, isLogin };
+  return { user, token, nickname, signup, login, logout, fetchUserDetails, changePassword, resetPassword, resetPasswordConfirm, getArticles, isLogin };
 }, { persist: true });
