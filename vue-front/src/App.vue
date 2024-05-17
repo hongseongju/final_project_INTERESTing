@@ -2,7 +2,8 @@
   <div>
     <nav>
       <RouterLink to="/">Home</RouterLink> |
-      <RouterLink to="/bank_map">내 주변 은행</RouterLink>
+      <RouterLink to="/bank_map">내 주변 은행</RouterLink> |
+      <RouterLink to="/exchange_rate">환율 계산기</RouterLink>
       <div v-if="isLogin">
         <RouterLink to="/profile">Profile</RouterLink> |
         <button @click="logout">Logout</button>

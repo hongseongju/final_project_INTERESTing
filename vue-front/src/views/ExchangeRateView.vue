@@ -1,7 +1,6 @@
 <template>
   <main>
-    <h4>각티슈 뽑듯 간편하게</h4>
-    <h1>INTERESTing(´▽`ʃ♡ƪ)</h1>
+    <h1>환율 계산기</h1>
   </main>
 </template>
 
