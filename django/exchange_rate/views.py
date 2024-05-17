@@ -14,13 +14,14 @@ EXCHAGE_API_KEY = 'q967vmJ6okD45DDROHTSKu97gSQNSA6A'
 # Create your views here.
 @api_view(['GET'])
 def exchage_rate(request):
+    print(request)
     params = {
         'authkey': EXCHAGE_API_KEY,
         'data': 'AP01',
 
     }
     response = requests.get(BASE_URL, params=params).json()
-    
+    print(response)
     for li in response:
         cur_nm = li.get('cur_nm')                                   # 국가/통화명
         cur_unit = li.get('cur_unit')                               # 통화코드
@@ -38,7 +39,9 @@ def exchage_rate(request):
                                 defaults=save_data
                             )
     rate = Exchange.objects.all()
+    print(rate)
     serializer = ExchangeSerializer(data=rate, many=True)
+    print(serializer.data)
     # 
     # safe=False: 보통 JsonREsponse는 안전한 응답만 처리되어서 필요
     return Response(serializer.data)
