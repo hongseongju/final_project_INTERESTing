@@ -11,6 +11,7 @@ from allauth.account.utils import user_email, user_field, user_username
 class User(AbstractUser):
     nickname = models.CharField(max_length=100)
     # profile_image = models.ImageField(blank=True)
+    cash = models.IntegerField(default = 0) 
 
 class CustomAccountAdapter(DefaultAccountAdapter):
  def save_user(self, request, user, form, commit=True):

@@ -1,16 +1,16 @@
 <template>
   <div>
     <h1>로그인</h1>
-    <form @submit.prevent="login">
+    <form @submit.prevent="logIn">
       <div>
-        <label for="username">username : </label>
+        <label for="username">Username:</label>
         <input type="text" v-model.trim="username" id="username" required />
       </div>
       <div>
-        <label for="password">password : </label>
+        <label for="password">Password:</label>
         <input type="password" v-model.trim="password" id="password" required />
       </div>
-      <input type="submit" value="로그인" />
+      <button type="submit">로그인</button>
     </form>
   </div>
 </template>
@@ -21,21 +21,13 @@ import { useAuthStore } from '@/stores/counter';
 
 const username = ref('');
 const password = ref('');
-const store = useAuthStore();
+const authStore = useAuthStore();
 
-const login = async () => {
-  try {
-    const payload = {
-      username: username.value,
-      password: password.value
-    };
-    await store.login(payload);
-  } catch (error) {
-    console.error('Login error:', error.response ? error.response.data : error.message);
-  }
+const logIn = () => {
+  authStore.login({ username: username.value, password: password.value });
 };
 </script>
 
-<style>
+<style scoped>
 /* 스타일 추가 가능 */
 </style>

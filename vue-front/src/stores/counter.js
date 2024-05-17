@@ -8,93 +8,110 @@ export const useAuthStore = defineStore('auth', () => {
   const user = ref(null);
   const token = ref(null);
 
-  const signup = async (payload) => {
+  const signup = (payload) => {
     const { username, password1, password2, email, nickname } = payload;
-    try {
-      const response = await axios.post(`${API_URL}registration/`, {
-        username, password1, password2, email, nickname
-      });
+    return axios.post(`${API_URL}registration/`, {
+      username, password1, password2, email, nickname
+    })
+    .then(response => {
       console.log('회원가입 성공!');
-    } catch (error) {
+    })
+    .catch(error => {
       console.error(error);
-    }
+    });
   };
 
-  const login = async (payload) => {
+  const login = (payload) => {
     const { username, password } = payload;
-    try {
-      const response = await axios.post(`${API_URL}login/`, {
-        username, password
-      });
-      user.value = response.data.user;
-      token.value = response.data.token;
-      setAuthHeaders();
-    } catch (error) {
+    return axios.post(`${API_URL}login/`, {
+      username, password
+    })
+    .then(response => {
+      // 응답 데이터의 구조 확인 및 설정
+      if (response.data.key) {  // Assuming the token is in 'key'
+        user.value = { username: username };  // Set user details appropriately
+        token.value = response.data.key;
+        setAuthHeaders();
+        console.log('로그인 성공!');
+      } else {
+        console.error('로그인 응답에 토큰이 없습니다.');
+      }
+    })
+    .catch(error => {
       console.error('Login failed:', error.response ? error.response.data : error.message);
-    }
+    });
   };
 
-  const logout = async () => {
-    try {
-      await axios.post(`${API_URL}logout/`);
+  const logout = () => {
+    return axios.post(`${API_URL}logout/`)
+    .then(() => {
       user.value = null;
       token.value = null;
       setAuthHeaders();
-    } catch (error) {
+    })
+    .catch(error => {
       console.error(error);
-    }
+    });
   };
 
-  const fetchUserDetails = async () => {
-    try {
-      const response = await axios.get(`${API_URL}user/`);
+  const fetchUserDetails = () => {
+    return axios.get(`${API_URL}user/`)
+    .then(response => {
       user.value = response.data;
-    } catch (error) {
+    })
+    .catch(error => {
       console.error(error);
-    }
+    });
   };
 
-  const changePassword = async (oldPassword, newPassword) => {
-    try {
-      await axios.post(`${API_URL}password/change/`, {
-        old_password: oldPassword,
-        new_password1: newPassword,
-        new_password2: newPassword
-      });
-    } catch (error) {
+  const changePassword = (oldPassword, newPassword) => {
+    return axios.post(`${API_URL}password/change/`, {
+      old_password: oldPassword,
+      new_password1: newPassword,
+      new_password2: newPassword
+    })
+    .then(() => {
+      // 필요한 추가 작업
+    })
+    .catch(error => {
       console.error(error);
-    }
+    });
   };
 
-  const resetPassword = async (email) => {
-    try {
-      await axios.post(`${API_URL}password/reset/`, { email });
-    } catch (error) {
+  const resetPassword = (email) => {
+    return axios.post(`${API_URL}password/reset/`, { email })
+    .then(() => {
+      // 필요한 추가 작업
+    })
+    .catch(error => {
       console.error(error);
-    }
+    });
   };
 
-  const resetPasswordConfirm = async (uid, token, newPassword) => {
-    try {
-      await axios.post(`${API_URL}password/reset/confirm/`, {
-        uid, token, new_password1: newPassword, new_password2: newPassword
-      });
-    } catch (error) {
+  const resetPasswordConfirm = (uid, token, newPassword) => {
+    return axios.post(`${API_URL}password/reset/confirm/`, {
+      uid, token, new_password1: newPassword, new_password2: newPassword
+    })
+    .then(() => {
+      // 필요한 추가 작업
+    })
+    .catch(error => {
       console.error(error);
-    }
+    });
   };
 
-  const getArticles = async () => {
-    try {
-      const response = await axios.get(`${API_URL}api/v1/articles/`, {
-        headers: {
-          Authorization: `Token ${token.value}`
-        }
-      });
+  const getArticles = () => {
+    return axios.get(`${API_URL}api/v1/articles/`, {
+      headers: {
+        Authorization: `Token ${token.value}`
+      }
+    })
+    .then(response => {
       // articles 상태 관리
-    } catch (error) {
+    })
+    .catch(error => {
       console.error(error);
-    }
+    });
   };
 
   const setAuthHeaders = () => {
