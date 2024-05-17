@@ -1,38 +1,33 @@
 <template>
   <div>
     <h1>로그인</h1>
-    <form @submit.prevent="login">
+    <form @submit.prevent="logIn">
       <div>
-        <label for="username">username : </label>
-        <input type="text" v-model.trim="username" id="username">
+        <label for="username">Username:</label>
+        <input type="text" v-model.trim="username" id="username" required />
       </div>
       <div>
-        <label for="password">password : </label>
-        <input type="password" v-model.trim="password" id="password">
+        <label for="password">Password:</label>
+        <input type="password" v-model.trim="password" id="password" required />
       </div>
-      <input type="submit">
+      <button type="submit">로그인</button>
     </form>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { useAuthStore } from '@/stores/counter'
+import { ref } from 'vue';
+import { useAuthStore } from '@/stores/counter';
 
-const username = ref(null)
-const password = ref(null)
-const store = useAuthStore()
+const username = ref('');
+const password = ref('');
+const authStore = useAuthStore();
 
-const login = function () {
-  const payload = {
-    username: username.value,
-    password: password.value
-  }
-  store.login(payload)
-}
-
+const logIn = () => {
+  authStore.login({ username: username.value, password: password.value });
+};
 </script>
 
-<style>
-
+<style scoped>
+/* 스타일 추가 가능 */
 </style>

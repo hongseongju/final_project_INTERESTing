@@ -1,70 +1,71 @@
-import { ref, computed } from 'vue'
-import { defineStore } from 'pinia'
-import axios from 'axios'
-import { useRouter } from 'vue-router'
+import { ref } from 'vue';
+import { defineStore } from 'pinia';
+import axios from 'axios';
 
-const API_URL = 'http://localhost:8000/dj-rest-auth/'
+const API_URL = 'http://localhost:8000/dj-rest-auth/';
 
 export const useAuthStore = defineStore('auth', () => {
-  const user = ref(null)
-  const token = ref(null)
+  const user = ref(null);
+  const token = ref(null);
 
-  const signup = function(payload){
-    const {username, password1, password2, email, nickname} = payload
+  const signup = (payload) => {
+    const { username, password1, password2, email, nickname } = payload;
+    return axios.post(`${API_URL}registration/`, {
+      username, password1, password2, email, nickname
+    })
+    .then(response => {
+      console.log('회원가입 성공!');
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  };
 
-    axios({
-      method: 'post',
-      url: `${API_URL}registration/`,
-      data:{
-        username, password1, password2, email, nickname
+  const login = (payload) => {
+    const { username, password } = payload;
+    return axios.post(`${API_URL}login/`, {
+      username, password
+    })
+    .then(response => {
+      // 응답 데이터의 구조 확인 및 설정
+      if (response.data.key) {  // Assuming the token is in 'key'
+        user.value = { username: username };  // Set user details appropriately
+        token.value = response.data.key;
+        setAuthHeaders();
+        console.log('로그인 성공!');
+      } else {
+        console.error('로그인 응답에 토큰이 없습니다.');
       }
     })
-      .then((response) =>{
-        console.log('회원가입 성공!')
-      })
-      .catch(err => console.log(err))
-  }
-  const login = (username, password) => {
-    axios.post(`${API_URL}login/`, {
-      username,
-      password
-    })
-    .then(response => {
-      user.value = response.data.user
-      token.value = response.data.token
-      setAuthHeaders()
-    })
     .catch(error => {
-      console.error(error)
-    })
-  }
+      console.error('Login failed:', error.response ? error.response.data : error.message);
+    });
+  };
 
   const logout = () => {
-    axios.post(`${API_URL}logout/`)
+    return axios.post(`${API_URL}logout/`)
     .then(() => {
-      user.value = null
-      token.value = null
-      setAuthHeaders()
+      user.value = null;
+      token.value = null;
+      setAuthHeaders();
     })
     .catch(error => {
-      console.error(error)
-      // 오류 처리
-    })
-  }
+      console.error(error);
+    });
+  };
 
   const fetchUserDetails = () => {
-    axios.get(`${API_URL}user/`)
+    return axios.get(`${API_URL}user/`)
     .then(response => {
-      user.value = response.data
+      user.value = response.data;
     })
     .catch(error => {
-      console.error(error)
-      // 오류 처리
-    })
-  }
+      console.error(error);
+    });
+  };
 
   const changePassword = (oldPassword, newPassword) => {
-    axios.post(`${API_URL}password/change/`, {
+    return axios.post(`${API_URL}password/change/`, {
       old_password: oldPassword,
       new_password1: newPassword,
       new_password2: newPassword
@@ -73,57 +74,53 @@ export const useAuthStore = defineStore('auth', () => {
       // 필요한 추가 작업
     })
     .catch(error => {
-      console.error(error)
-      // 오류 처리
-    })
-  }
+      console.error(error);
+    });
+  };
 
   const resetPassword = (email) => {
-    axios.post(`${API_URL}password/reset/`, {
-      email
-    })
+    return axios.post(`${API_URL}password/reset/`, { email })
     .then(() => {
       // 필요한 추가 작업
     })
     .catch(error => {
-      console.error(error)
-      // 오류 처리
-    })
-  }
+      console.error(error);
+    });
+  };
 
   const resetPasswordConfirm = (uid, token, newPassword) => {
-    axios.post(`${API_URL}password/reset/confirm/`, {
-      uid,
-      token,
-      new_password1: newPassword,
-      new_password2: newPassword
+    return axios.post(`${API_URL}password/reset/confirm/`, {
+      uid, token, new_password1: newPassword, new_password2: newPassword
     })
     .then(() => {
       // 필요한 추가 작업
     })
     .catch(error => {
-      console.error(error)
-      // 오류 처리
-    })
-  }
+      console.error(error);
+    });
+  };
 
   const getArticles = () => {
-    axios({
-      method: 'get',
-      url: `${API_URL}api/v1/articles/`,
+    return axios.get(`${API_URL}api/v1/articles/`, {
       headers: {
         Authorization: `Token ${token.value}`
       }
     })
     .then(response => {
       // articles 상태 관리
-      articles.value = response.data
     })
     .catch(error => {
-      console.log(error)
-      // 오류 처리
-    })
-  }
+      console.error(error);
+    });
+  };
 
-  return { user, token, signup, login, logout, fetchUserDetails, changePassword, resetPassword, resetPasswordConfirm, getArticles }
-})
+  const setAuthHeaders = () => {
+    if (token.value) {
+      axios.defaults.headers.common['Authorization'] = `Token ${token.value}`;
+    } else {
+      delete axios.defaults.headers.common['Authorization'];
+    }
+  };
+
+  return { user, token, signup, login, logout, fetchUserDetails, changePassword, resetPassword, resetPasswordConfirm, getArticles };
+});
