@@ -13,8 +13,8 @@ class CustomRegisterSerializer(RegisterSerializer):
   allow_blank=True,
   max_length=255
  )
-  cash = serializers.IntegerField(required=True)
-  
+  # cash = serializers.IntegerField()
+
  # 해당 필드도 저장 시 함께 사용하도록 설정합니다.
   def get_cleaned_data(self):
     return {
@@ -22,7 +22,7 @@ class CustomRegisterSerializer(RegisterSerializer):
       'password1': self.validated_data.get('password1', ''),
       'nickname': self.validated_data.get('nickname', ''),
       'email' : self.validated_data.get('email', ''),
-      'cash' : self.validated_data.get('cash', ''),
+      # 'cash' : self.validated_data.get('cash', ''),
  }
 
 
