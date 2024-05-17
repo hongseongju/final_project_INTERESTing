@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'accounts',
+    'exchange_rate',
     'django.contrib.sites',  # allauth가 필요로 하는 앱
     'allauth',
     'allauth.account',

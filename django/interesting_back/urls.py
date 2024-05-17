@@ -22,4 +22,5 @@ urlpatterns = [
     # dj-rest-auth의 기본 로직
     path('dj-rest-auth/', include('dj_rest_auth.urls')),
     path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
+    path('api_exchange_rate/', include('exchange_rate.urls')),
 ]
