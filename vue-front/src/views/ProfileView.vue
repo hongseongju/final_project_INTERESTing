@@ -20,9 +20,7 @@
   const user = computed(() => authStore.user);
   
   onMounted(() => {
-    if (!authStore.user) {
-      authStore.fetchUserDetails();
-    }
+    authStore.fetchUserDetails();
   });
   </script>
   
