@@ -1,18 +1,35 @@
 <template>
-    <div>
-      <nav>
-        <RouterLink to="/">Home</RouterLink> |
+  <div>
+    <nav>
+      <RouterLink to="/">Home</RouterLink> |
+      <RouterLink to="/bank_map">내 주변 은행</RouterLink>
+      <div v-if="isLogin">
+        <RouterLink to="/profile">Profile</RouterLink> |
+        <button @click="logout">Logout</button>
+      </div>
+      <div v-else>
         <RouterLink to="/signup">회원가입</RouterLink> |
-        <RouterLink to="/login">LogIn</RouterLink> |
-        <RouterLink to="/bank_map">내 주변 은행</RouterLink>
-      </nav>
-    </div>
-  <RouterView />
+        <RouterLink to="/login">LogIn</RouterLink>
+      </div>
+    </nav>
+    <RouterView />
+  </div>
 </template>
 
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
+import { computed } from 'vue';
+import { useAuthStore } from '@/stores/counter';
+import { RouterLink, RouterView } from 'vue-router';
+
+const authStore = useAuthStore();
+
+const isLogin = computed(() => authStore.isLogin);
+
+const logout = () => {
+  authStore.logout();
+};
 </script>
 
 <style scoped>
+/* 스타일 추가 가능 */
 </style>

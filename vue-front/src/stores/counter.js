@@ -1,12 +1,14 @@
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { defineStore } from 'pinia';
 import axios from 'axios';
+import { useRouter } from 'vue-router'
 
 const API_URL = 'http://localhost:8000/dj-rest-auth/';
 
 export const useAuthStore = defineStore('auth', () => {
   const user = ref(null);
   const token = ref(null);
+  const router = useRouter()
 
   const signup = (payload) => {
     const { username, password1, password2, email, nickname } = payload;
@@ -15,6 +17,8 @@ export const useAuthStore = defineStore('auth', () => {
     })
     .then(response => {
       console.log('회원가입 성공!');
+      const password = password1
+      login({ username, password })
     })
     .catch(error => {
       console.error(error);
@@ -31,8 +35,11 @@ export const useAuthStore = defineStore('auth', () => {
       if (response.data.key) {  // Assuming the token is in 'key'
         user.value = { username: username };  // Set user details appropriately
         token.value = response.data.key;
-        setAuthHeaders();
         console.log('로그인 성공!');
+        router.push({ name: 'Home' })
+        setAuthHeaders();
+  
+
       } else {
         console.error('로그인 응답에 토큰이 없습니다.');
       }
@@ -114,6 +121,11 @@ export const useAuthStore = defineStore('auth', () => {
     });
   };
 
+
+  const isLogin = computed(() => {
+    return token.value !== null;
+  });
+
   const setAuthHeaders = () => {
     if (token.value) {
       axios.defaults.headers.common['Authorization'] = `Token ${token.value}`;
@@ -122,5 +134,5 @@ export const useAuthStore = defineStore('auth', () => {
     }
   };
 
-  return { user, token, signup, login, logout, fetchUserDetails, changePassword, resetPassword, resetPasswordConfirm, getArticles };
-});
+  return { user, token, signup, login, logout, fetchUserDetails, changePassword, resetPassword, resetPasswordConfirm, getArticles, isLogin };
+}, { persist: true });
