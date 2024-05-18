@@ -10,11 +10,15 @@
             <button @click="searchPlaces" class="custom-border">검색하기</button>
           </div>
         </div>
-        <ul id="placesList"></ul>
-        <div id="pagination"></div>
       </div>
     </div>
-    <div id="map" class="map"></div>
+  </div>
+  <div class="flex">
+    <div id="map" class="map child"></div>
+    <div>
+      <ul id="placesList"></ul>
+      <div id="pagination"></div>
+    </div>
   </div>
 </template>
 
@@ -82,6 +86,11 @@ export default {
 
       this.removeAllChildNodes(listEl);
       this.removeMarker();
+
+      const maxItemsPerPage = 5;
+      const startIndex = (pagination.current - 1) * maxItemsPerPage;
+      const endIndex = Math.min(startIndex + maxItemsPerPage, places.length);
+      
 
       places.forEach((place, i) => {
         const placePosition = new kakao.maps.LatLng(place.y, place.x);
@@ -185,7 +194,7 @@ export default {
   display: flex;
 }
 .map {
-  width: 60vw;
+  width: 600px;
   height: 600px;
 }
 
@@ -206,4 +215,7 @@ export default {
   cursor: pointer;
 }
 
+.flex {
+  display: flex;
+}
 </style>
