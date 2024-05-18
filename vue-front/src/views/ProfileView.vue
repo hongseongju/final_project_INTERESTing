@@ -4,7 +4,7 @@
       <div v-if="user">
         <p>Username: {{ user.username }}</p>
         <p>Nickname: {{ user.nickname }}</p>
-        <p>Cash: {{ user.cash }}</p>
+        <!-- <p>Cash: {{ user.cash }}</p> -->
       </div>
       <div v-else>
         <p>사용자 정보가 없습니다.</p>
