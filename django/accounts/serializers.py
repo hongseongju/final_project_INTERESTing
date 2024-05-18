@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from dj_rest_auth.registration.serializers import RegisterSerializer
 from dj_rest_auth.serializers import UserDetailsSerializer
-from .models import User
+from .models import CustomUser
 from django.contrib.auth import get_user_model
 UserModel = get_user_model()
 

@@ -155,7 +155,7 @@ REST_FRAMEWORK = {
 }
 
 # 사용자 수정
-AUTH_USER_MODEL = 'accounts.User'
+AUTH_USER_MODEL = 'accounts.CustomUser'
 
 # 커스텀 등록 시리얼라이저를 사용하도록 설정
 REST_AUTH_REGISTER_SERIALIZERS = {

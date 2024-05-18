@@ -8,10 +8,10 @@ from allauth.account.adapter import DefaultAccountAdapter
 from allauth.account.utils import user_email, user_field, user_username
 
 # Create your models here.
-class User(AbstractUser):
+class CustomUser(AbstractUser):
     nickname = models.CharField(max_length=100)
     # profile_image = models.ImageField(blank=True)
-    cash = models.IntegerField(default = 0) 
+    cash = models.DecimalField(max_digits=10, decimal_places=2, default=0) 
 
 class CustomAccountAdapter(DefaultAccountAdapter):
  def save_user(self, request, user, form, commit=True):
