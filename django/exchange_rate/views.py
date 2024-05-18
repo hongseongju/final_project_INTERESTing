@@ -17,6 +17,7 @@ def exchage_rate(request):
     print(request)
     params = {
         'authkey': EXCHAGE_API_KEY,
+        'searchdate': '20240516',
         'data': 'AP01',
 
     }
@@ -40,10 +41,8 @@ def exchage_rate(request):
                             )
     rate = Exchange.objects.all()
     print(rate)
-    serializer = ExchangeSerializer(data=rate, many=True)
+    serializer = ExchangeSerializer(rate, many=True)
     print(serializer.data)
-    # 
-    # safe=False: 보통 JsonREsponse는 안전한 응답만 처리되어서 필요
     return Response(serializer.data)
 
 #{ 'message': "exchage save okay!"}
