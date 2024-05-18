@@ -7,6 +7,7 @@ import BankMap from '@/views/BankMapView.vue';
 import Profile from '@/views/ProfileView.vue';
 import ExchangeRate from '@/views/ExchangeRateView.vue';
 import Present from '@/views/PresentView.vue';
+import InterestRate from '@/views/InterestRateView.vue';
 
 const routes = [
   { path: '/', name: 'Home', component: Home },
@@ -16,6 +17,7 @@ const routes = [
   { path: '/profile', name: 'Profile', component: Profile },
   { path: '/exchange_rate', name: 'ExchangeRate', component: ExchangeRate },
   { path: '/present', name: 'Present', component: Present },
+  { path: '/interest_rate', name: 'InterestRate', component: InterestRate},
 ];
 
 const router = createRouter({

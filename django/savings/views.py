@@ -75,5 +75,7 @@ def saving_rate(request):
             option_serializer.save(financial_product=product)
     
     rate = FinancialProduct.objects.all()
+
     serializer = SavingsProductsSerializer(rate, many=True)
+
     return Response(serializer.data)
