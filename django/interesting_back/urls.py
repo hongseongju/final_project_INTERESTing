@@ -23,4 +23,5 @@ urlpatterns = [
     path('dj-rest-auth/', include('dj_rest_auth.urls')),
     path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
     path('api_exchange_rate/', include('exchange_rate.urls')),
+    path('api_savings/', include('savings.urls')),
 ]
