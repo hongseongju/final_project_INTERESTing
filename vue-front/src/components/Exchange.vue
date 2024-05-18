@@ -20,8 +20,7 @@ const exchanges = ref([])
 const ExchangeData = () => {
     axios.get('http://127.0.0.1:8000/api_exchange_rate/')
     .then(response => {
-        console.log(exchanges)
-        console.log(exchanges.value)
+        console.log('환율 데이터 조회 완료!(✿◡‿◡)')
         exchanges.value = response.data
     })
     .catch(error => {
