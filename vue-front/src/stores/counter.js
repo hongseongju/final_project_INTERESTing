@@ -72,41 +72,41 @@ export const useAuthStore = defineStore('auth', () => {
     });
   };
 
-  // const changePassword = (oldPassword, newPassword) => {
-  //   return axios.post(`${API_URL}password/change/`, {
-  //     old_password: oldPassword,
-  //     new_password1: newPassword,
-  //     new_password2: newPassword
-  //   })
-  //   .then(() => {
-  //     // 필요한 추가 작업
-  //   })
-  //   .catch(error => {
-  //     console.error(error);
-  //   });
-  // };
+  const changePassword = (oldPassword, newPassword) => {
+    return axios.post(`${API_URL}password/change/`, {
+      old_password: oldPassword,
+      new_password1: newPassword,
+      new_password2: newPassword
+    })
+    .then(() => {
+      // 필요한 추가 작업
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  };
 
-  // const resetPassword = (email) => {
-  //   return axios.post(`${API_URL}password/reset/`, { email })
-  //   .then(() => {
-  //     // 필요한 추가 작업
-  //   })
-  //   .catch(error => {
-  //     console.error(error);
-  //   });
-  // };
+  const resetPassword = (email) => {
+    return axios.post(`${API_URL}password/reset/`, { email })
+    .then(() => {
+      // 필요한 추가 작업
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  };
 
-  // const resetPasswordConfirm = (uid, token, newPassword) => {
-  //   return axios.post(`${API_URL}password/reset/confirm/`, {
-  //     uid, token, new_password1: newPassword, new_password2: newPassword
-  //   })
-  //   .then(() => {
-  //     // 필요한 추가 작업
-  //   })
-  //   .catch(error => {
-  //     console.error(error);
-  //   });
-  // };
+  const resetPasswordConfirm = (uid, token, newPassword) => {
+    return axios.post(`${API_URL}password/reset/confirm/`, {
+      uid, token, new_password1: newPassword, new_password2: newPassword
+    })
+    .then(() => {
+      // 필요한 추가 작업
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  };
 
   const getArticles = () => {
     return axios.get(`${API_URL}api/v1/articles/`, {
@@ -135,5 +135,5 @@ export const useAuthStore = defineStore('auth', () => {
     }
   };
 
-  return { user, token, signup, login, logout, fetchUserDetails, getArticles, isLogin };
+  return { user, token, signup, login, logout, fetchUserDetails, changePassword, resetPassword, resetPasswordConfirm, getArticles, isLogin };
 }, { persist: true });
