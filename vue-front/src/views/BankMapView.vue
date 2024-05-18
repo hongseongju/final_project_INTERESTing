@@ -5,7 +5,15 @@
       <div id="menu_wrap" class="bg_white">
         <div class="option">
           <div>
-            <input type="text" id="keyword" size="15" placeholder="은행명 입력" class="custom-border" />  |  
+            <select v-model="result" id="keyword" placeholder="은행명 입력" class="custom-border">
+              <option value="" disabled>은행 선택</option>
+              <option v-for="(bank, index) in banks"
+              :key="index"
+              :value="bank"
+              >
+              {{ bank }}
+              </option>
+              </select>  |  
             <input type="text" id="region" size="15" placeholder="지역 입력" class="custom-border" />
             <button @click="searchPlaces" class="custom-border">검색하기</button>
           </div>
@@ -16,8 +24,9 @@
   <div class="flex">
     <div id="map" class="map child"></div>
     <div>
-      <ul id="placesList"></ul>
       <div id="pagination"></div>
+      <ul id="placesList"></ul>
+
     </div>
   </div>
 </template>
@@ -26,6 +35,12 @@
 const KAKAO_MAP_KEY= '228da3a7e283b54897dee61916b342ee'
 
 export default {
+  data() {
+    return {
+      selectBank: '',
+      banks: ['국민은행', '기업은행', '광주은행', '신한은행', '전북은행']
+    }
+  },
   mounted() {
     if (window.kakao && window.kakao.maps) {
       this.initMap()
