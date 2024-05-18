@@ -72,19 +72,19 @@ export const useAuthStore = defineStore('auth', () => {
     });
   };
 
-  const changePassword = (oldPassword, newPassword) => {
-    return axios.post(`${API_URL}password/change/`, {
-      old_password: oldPassword,
-      new_password1: newPassword,
-      new_password2: newPassword
-    })
-    .then(() => {
-      // 필요한 추가 작업
-    })
-    .catch(error => {
-      console.error(error);
-    });
-  };
+  // const changePassword = (oldPassword, newPassword) => {
+  //   return axios.post(`${API_URL}password/change/`, {
+  //     old_password: oldPassword,
+  //     new_password1: newPassword,
+  //     new_password2: newPassword
+  //   })
+  //   .then(() => {
+  //     // 필요한 추가 작업
+  //   })
+  //   .catch(error => {
+  //     console.error(error);
+  //   });
+  // };
 
   // const resetPassword = (email) => {
   //   return axios.post(`${API_URL}password/reset/`, { email })
@@ -135,5 +135,5 @@ export const useAuthStore = defineStore('auth', () => {
     }
   };
 
-  return { user, token, signup, login, logout, fetchUserDetails, changePassword, resetPassword, resetPasswordConfirm, getArticles, isLogin };
+  return { user, token, signup, login, logout, fetchUserDetails, getArticles, isLogin };
 }, { persist: true });
