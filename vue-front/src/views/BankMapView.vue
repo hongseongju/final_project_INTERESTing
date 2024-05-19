@@ -32,7 +32,7 @@
 </template>
 
 <script>
-const KAKAO_MAP_KEY= '228da3a7e283b54897dee61916b342ee'
+const KAKAO_MAP_KEY = import.meta.env.VITE_KAKAO_MAP_KEY
 
 export default {
   data() {

@@ -1,9 +1,9 @@
 <template>
   <div>
-    <h3>적금</h3>
-    <ul v-if="savings.length">
-      <li v-for="saving in savings" :key="saving.id">
-        {{ saving.fin_prdt_nm }} - {{ saving.kor_co_nm }}
+    <h3>예금</h3>
+    <ul v-if="deposits.length">
+      <li v-for="deposit in deposits" :key="deposit.fin_prdt_cd">
+        {{ deposit.fin_prdt_nm }} - {{ deposit.kor_co_nm }}
       </li>
     </ul>
   </div>
@@ -13,15 +13,15 @@
 import { onMounted, ref } from 'vue'
 import axios from 'axios'
 
-// 적금 데이터를 저장할 변수
-const savings = ref([])
+// 예금 데이터를 저장할 변수
+const deposits = ref([])
 
-// 적금 데이터를 가져오는 함수
-const fetchSavings = () => {
-  axios.get('http://127.0.0.1:8000/api_savings/')
+// 예금 데이터를 가져오는 함수
+const fetchDeposits = () => {
+  axios.get('http://127.0.0.1:8000/api_savings/deposit/') 
     .then(response => {
-      console.log('적금 데이터 조회 완료')
-      savings.value = response.data
+      console.log('예금 데이터 조회 완료')
+      deposits.value = response.data
     })
     .catch(error => {
       console.error('오류 발생: ', error)
@@ -29,7 +29,7 @@ const fetchSavings = () => {
 }
 
 onMounted(() => {
-  fetchSavings()
+  fetchDeposits()
 })
 </script>
 
