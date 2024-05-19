@@ -14,8 +14,8 @@ EXCHAGE_API_KEY = 'q967vmJ6okD45DDROHTSKu97gSQNSA6A'
 def exchage_rate(request):
     params = {
         'authkey': EXCHAGE_API_KEY,
-        'searchdate': '20240516',
-        'data': 'AP01',
+        # 'searchdate': '20240516', # 이거 빼면 오늘 날짜로 들어감 단점! 주말에는 데이터 없음 이거 없애면 실시간으로 뜸
+        'data': 'AP01', 
 
     }
     response = requests.get(BASE_URL, params=params).json()

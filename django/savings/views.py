@@ -2,6 +2,7 @@ import requests
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from django.http import JsonResponse
 from .models import FinancialProduct, OptionList
 from .serializers import SavingsProductsSerializer, SavingsOptionsSerializer
 from .models import DepositProduct, DepositOption
@@ -144,3 +145,24 @@ def deposit_rate(request):
     serializer = DepositProductSerializer(rate, many=True)
 
     return Response(serializer.data)
+
+
+
+def financial_products(request):
+    products = FinancialProduct.objects.all()
+    response_data = []
+    for product in products:
+        options = product.options.all()
+        product_data = {
+            'fin_prdt_cd': product.fin_prdt_cd,
+            'fin_prdt_nm': product.fin_prdt_nm,
+            'kor_co_nm': product.kor_co_nm,
+            'join_way': product.join_way,
+            'spcl_cnd': product.spcl_cnd,
+            'etc_note': product.etc_note,
+            'options': list(options.values(
+                'id', 'intr_rate_type_nm', 'save_trm', 'intr_rate', 'intr_rate2'
+            ))
+        }
+        response_data.append(product_data)
+    return JsonResponse(response_data, safe=False)
