@@ -1,4 +1,5 @@
 import requests
+from django.conf import settings
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -11,13 +12,13 @@ from .serializers import DepositProductSerializer, DepositOptionSerializer
 BASE_URL = 'http://finlife.fss.or.kr/finlifeapi/'
 
 # !! env로 이동 필요
-ACCOUNT_API = '3bab164692dd6b5e00c2b02d42509c18'
+ACCOUNT_API_KEY = settings.ACCOUNT_API_KEY
 
 @api_view(['GET'])
 def saving_rate(request):
     URL = BASE_URL + 'savingProductsSearch.json'
     params = {
-        'auth': ACCOUNT_API,
+        'auth': ACCOUNT_API_KEY,
         'topFinGrpNo': '020000',    #은행코드: 020000
         'pageNo': '1'
     }
@@ -87,7 +88,7 @@ def saving_rate(request):
 def deposit_rate(request):
     URL = BASE_URL + 'depositProductsSearch.json'
     params = {
-        'auth': ACCOUNT_API,
+        'auth': ACCOUNT_API_KEY,
         'topFinGrpNo': '020000',    # 은행코드: 020000
         'pageNo': '1'
     }

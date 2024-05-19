@@ -1,3 +1,4 @@
+from django.conf import settings
 import requests
 from django.shortcuts import render
 from rest_framework.response import Response
@@ -6,14 +7,14 @@ from .models import Exchange
 from .serializers import ExchangeSerializer
 
 BASE_URL = 'https://www.koreaexim.go.kr/site/program/financial/exchangeJSON'
-# !! env로 이동 필요
-EXCHAGE_API_KEY = 'q967vmJ6okD45DDROHTSKu97gSQNSA6A'
+
+EXCHANGE_API_KEY = settings.EXCHANGE_API_KEY
 
 # Create your views here.
 @api_view(['GET'])
 def exchage_rate(request):
     params = {
-        'authkey': EXCHAGE_API_KEY,
+        'authkey': EXCHANGE_API_KEY,
         # 'searchdate': '20240516', # 이거 빼면 오늘 날짜로 들어감 단점! 주말에는 데이터 없음 이거 없애면 실시간으로 뜸
         'data': 'AP01', 
 
