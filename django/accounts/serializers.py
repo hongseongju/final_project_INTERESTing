@@ -24,5 +24,10 @@ class CustomRegisterSerializer(RegisterSerializer): # 사용자 회원가입
 class CustomUserDetailsSerializer(UserDetailsSerializer): # 사용자 프로필 정보 직렬화
     class Meta:
         model = UserModel
-        fields = ['pk', 'username', 'email', 'nickname', 'cash']
+        fields = ['pk', 'username', 'email', 'nickname', 'cash', 'profile_image']
         read_only_fields = ('email',)
+
+class ProfileUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserModel
+        fields = ['nickname', 'profile_image']

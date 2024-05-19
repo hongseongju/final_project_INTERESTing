@@ -10,7 +10,7 @@ from allauth.account.utils import user_email, user_field, user_username
 # Create your models here.
 class CustomUser(AbstractUser):
     nickname = models.CharField(max_length=100)
-    # profile_image = models.ImageField(blank=True)
+    profile_image = models.ImageField(upload_to='profile_images/', default='default_profile.png')
     cash = models.DecimalField(max_digits=10, decimal_places=2, default=0) 
 
 class CustomAccountAdapter(DefaultAccountAdapter):
