@@ -3,6 +3,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from .models import CustomUser
 
+
+
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def charge_cash(request):
@@ -19,3 +21,5 @@ def charge_cash(request):
     user.save()
 
     return Response({'message': 'Cash charged successfully', 'amount': amount})
+
+

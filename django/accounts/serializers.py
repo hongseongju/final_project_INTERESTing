@@ -26,3 +26,6 @@ class CustomUserDetailsSerializer(UserDetailsSerializer): # 사용자 프로필 
         model = UserModel
         fields = ['pk', 'username', 'email', 'nickname', 'cash']
         read_only_fields = ('email',)
+        
+
+
