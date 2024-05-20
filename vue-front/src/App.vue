@@ -8,9 +8,6 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <!-- <li class="nav-item">
-            <RouterLink class="nav-link" to="/">Home</RouterLink>
-          </li> -->
           <li class="nav-item">
             <RouterLink class="nav-link" to="/bank_map">내 주변 은행</RouterLink>
           </li>
@@ -23,16 +20,6 @@
           <li class="nav-item">
             <RouterLink class="nav-link" to="/interest_rate">예적금 비교</RouterLink>
           </li>
-          <!-- <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Dropdown link
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-          </li> -->
         </ul>
         <ul class="navbar-nav">
           <li v-if="isLogin" class="nav-item">
@@ -41,10 +28,10 @@
           <li v-if="isLogin" class="nav-item">
             <button @click="logout" class="btn btn-link nav-link">Logout</button>
           </li>
-          <li v-else class="nav-item">
+          <li v-if="!isLogin" class="nav-item">
             <RouterLink class="nav-link" to="/signup">회원가입</RouterLink>
           </li>
-          <li v-else class="nav-item">
+          <li v-if="!isLogin" class="nav-item">
             <RouterLink class="nav-link" to="/login">LogIn</RouterLink>
           </li>
         </ul>
