@@ -25,4 +25,5 @@ urlpatterns = [
     path('api_exchange_rate/', include('exchange_rate.urls')),
     path('api_savings/', include('savings.urls')),
     path('accounts/', include('accounts.urls')),
+    path('articles/', include('articles.urls')),
 ]

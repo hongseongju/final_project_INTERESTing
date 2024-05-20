@@ -12,6 +12,12 @@ import CashRecharge from '@/components/CashRecharge.vue';
 import SavingsDetail from '@/components/SavingsDetail.vue';
 import DepositDetail from '@/components/DepositDetail.vue';
 
+// 게시판 관련 컴포넌트 추가
+import ArticleList from '@/components/ArticleList.vue';
+import ArticleDetail from '@/components/ArticleDetail.vue';
+import ArticleForm from '@/components/ArticleForm.vue';
+import ArticleView from '@/views/ArticleView.vue'; // ArticleView 추가
+
 const routes = [
   { path: '/', name: 'Home', component: Home },
   { path: '/login', name: 'Login', component: Login },
@@ -24,6 +30,12 @@ const routes = [
   { path: '/cash-charge', name: 'CashRecharge', component: CashRecharge },
   { path: '/savings_detail', name: 'SavingsDetail', component: SavingsDetail },
   { path: '/deposit_detail', name: 'DepositDetail', component: DepositDetail },
+  
+  // 게시판 관련 경로 추가
+  { path: '/articles', name: 'ArticleList', component: ArticleList },
+  { path: '/articles/:id', name: 'ArticleDetail', component: ArticleDetail },
+  { path: '/new-article', name: 'NewArticle', component: ArticleForm },
+  { path: '/articles/view/:id', name: 'ArticleView', component: ArticleView } // ArticleView 경로 추가
 ];
 
 const router = createRouter({

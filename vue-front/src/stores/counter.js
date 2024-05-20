@@ -1,24 +1,26 @@
 import { ref, computed } from 'vue';
 import { defineStore } from 'pinia';
 import axios from 'axios';
-import { useRouter } from 'vue-router'
+import { useRouter } from 'vue-router';
 
-const API_URL = 'http://localhost:8000/dj-rest-auth/';
+const API_URL = 'http://localhost:8000/';
 
 export const useAuthStore = defineStore('auth', () => {
   const user = ref(null);
   const token = ref(null);
-  const router = useRouter()
+  const articles = ref([]);
+  const comments = ref([]);
+  const router = useRouter();
 
   const signup = (payload) => {
     const { username, password1, password2, email, nickname } = payload;
-    return axios.post(`${API_URL}registration/`, {
+    return axios.post(`${API_URL}dj-rest-auth/registration/`, {
       username, password1, password2, email, nickname
     })
     .then(response => {
       console.log('회원가입 성공!');
-      const password = password1
-      login({ username, password })
+      const password = password1;
+      login({ username, password });
     })
     .catch(error => {
       console.error(error);
@@ -27,19 +29,16 @@ export const useAuthStore = defineStore('auth', () => {
 
   const login = (payload) => {
     const { username, password } = payload;
-    return axios.post(`${API_URL}login/`, {
+    return axios.post(`${API_URL}dj-rest-auth/login/`, {
       username, password
     })
     .then(response => {
-      // 응답 데이터의 구조 확인 및 설정
-      if (response.data.key) {  // Assuming the token is in 'key'
-        user.value = { username: username };  // Set user details appropriately
+      if (response.data.key) {
+        user.value = { username: username };
         token.value = response.data.key;
         console.log('로그인 성공!');
-        router.push({ name: 'Home' })
+        router.push({ name: 'Home' });
         setAuthHeaders();
-  
-
       } else {
         console.error('로그인 응답에 토큰이 없습니다.');
       }
@@ -50,7 +49,7 @@ export const useAuthStore = defineStore('auth', () => {
   };
 
   const logout = () => {
-    return axios.post(`${API_URL}logout/`)
+    return axios.post(`${API_URL}dj-rest-auth/logout/`)
     .then(() => {
       user.value = null;
       token.value = null;
@@ -62,10 +61,10 @@ export const useAuthStore = defineStore('auth', () => {
   };
 
   const fetchUserDetails = () => {
-    return axios.get(`${API_URL}user/`)
+    return axios.get(`${API_URL}dj-rest-auth/user/`)
     .then(response => {
       user.value = response.data;
-      console.log(response.data)
+      console.log(response.data);
     })
     .catch(error => {
       console.error(error);
@@ -73,7 +72,7 @@ export const useAuthStore = defineStore('auth', () => {
   };
 
   const changePassword = (oldPassword, newPassword) => {
-    return axios.post(`${API_URL}password/change/`, {
+    return axios.post(`${API_URL}dj-rest-auth/password/change/`, {
       old_password: oldPassword,
       new_password1: newPassword,
       new_password2: newPassword
@@ -87,7 +86,7 @@ export const useAuthStore = defineStore('auth', () => {
   };
 
   const resetPassword = (email) => {
-    return axios.post(`${API_URL}password/reset/`, { email })
+    return axios.post(`${API_URL}dj-rest-auth/password/reset/`, { email })
     .then(() => {
       // 필요한 추가 작업
     })
@@ -97,7 +96,7 @@ export const useAuthStore = defineStore('auth', () => {
   };
 
   const resetPasswordConfirm = (uid, token, newPassword) => {
-    return axios.post(`${API_URL}password/reset/confirm/`, {
+    return axios.post(`${API_URL}dj-rest-auth/password/reset/confirm/`, {
       uid, token, new_password1: newPassword, new_password2: newPassword
     })
     .then(() => {
@@ -108,20 +107,101 @@ export const useAuthStore = defineStore('auth', () => {
     });
   };
 
-  const getArticles = () => {
-    return axios.get(`${API_URL}api/v1/articles/`, {
-      headers: {
-        Authorization: `Token ${token.value}`
-      }
-    })
+  const fetchArticles = () => {
+    return axios.get(`${API_URL}articles/`)
     .then(response => {
-      // articles 상태 관리
+      articles.value = response.data;
     })
     .catch(error => {
       console.error(error);
     });
   };
 
+  const fetchArticle = (articleId) => {
+    return axios.get(`${API_URL}articles/${articleId}/`)
+    .then(response => {
+      return response.data;
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  };
+
+  const createArticle = (articleData) => {
+    return axios.post(`${API_URL}articles/`, articleData)
+    .then(response => {
+      articles.value.push(response.data);
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  };
+
+  const updateArticle = (articleId, articleData) => {
+    return axios.put(`${API_URL}articles/${articleId}/`, articleData)
+    .then(response => {
+      const index = articles.value.findIndex(article => article.id === articleId);
+      if (index !== -1) {
+        articles.value[index] = response.data;
+      }
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  };
+
+  const deleteArticle = (articleId) => {
+    return axios.delete(`${API_URL}articles/${articleId}/`)
+    .then(() => {
+      articles.value = articles.value.filter(article => article.id !== articleId);
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  };
+
+  const fetchComments = (articleId) => {
+    return axios.get(`${API_URL}articles/${articleId}/comments/`)
+    .then(response => {
+      comments.value = response.data;
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  };
+
+  const createComment = (articleId, commentData) => {
+    return axios.post(`${API_URL}articles/${articleId}/comments/`, commentData)
+    .then(response => {
+      comments.value.push(response.data);
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  };
+
+  const updateComment = (commentId, commentData) => {
+    return axios.put(`${API_URL}comments/${commentId}/`, commentData)
+    .then(response => {
+      const index = comments.value.findIndex(comment => comment.id === commentId);
+      if (index !== -1) {
+        comments.value[index] = response.data;
+      }
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  };
+
+  const deleteComment = (commentId) => {
+    return axios.delete(`${API_URL}comments/${commentId}/`)
+    .then(() => {
+      comments.value = comments.value.filter(comment => comment.id !== commentId);
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  };
 
   const isLogin = computed(() => {
     return token.value !== null;
@@ -135,5 +215,27 @@ export const useAuthStore = defineStore('auth', () => {
     }
   };
 
-  return { user, token, signup, login, logout, fetchUserDetails, changePassword, getArticles, isLogin };
+  return { 
+    user, 
+    token, 
+    articles, 
+    comments, 
+    signup, 
+    login, 
+    logout, 
+    fetchUserDetails, 
+    changePassword, 
+    resetPassword, 
+    resetPasswordConfirm, 
+    fetchArticles, 
+    fetchArticle, 
+    createArticle, 
+    updateArticle, 
+    deleteArticle, 
+    fetchComments, 
+    createComment, 
+    updateComment, 
+    deleteComment, 
+    isLogin 
+  };
 }, { persist: true });

@@ -38,6 +38,10 @@
       </div>
     </div>
   </nav>
+  <div class="container mt-4">
+    <ArticleList />
+    <router-link to="/new-article" class="btn btn-primary mt-3">Create New Article</router-link>
+  </div>
   <RouterView />
 </template>
 
@@ -45,6 +49,7 @@
 import { computed } from 'vue';
 import { useAuthStore } from '@/stores/counter';
 import { RouterLink, RouterView } from 'vue-router';
+import ArticleList from '@/components/ArticleList.vue';
 
 const authStore = useAuthStore();
 const isLogin = computed(() => authStore.isLogin);
