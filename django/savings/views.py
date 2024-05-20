@@ -148,8 +148,8 @@ def deposit_rate(request):
     return Response(serializer.data)
 
 
-
-def financial_products(request):
+# 적금 상세
+def savings_detail(request):
     products = FinancialProduct.objects.all()
     response_data = []
     for product in products:
@@ -167,3 +167,25 @@ def financial_products(request):
         }
         response_data.append(product_data)
     return JsonResponse(response_data, safe=False)
+
+
+# 적금 상세
+def deposit_detail(request):
+    products = DepositProduct.objects.all()
+    response_data = []
+    for product in products:
+        options = product.options.all()
+        product_data = {
+            'fin_prdt_cd': product.fin_prdt_cd,
+            'fin_prdt_nm': product.fin_prdt_nm,
+            'kor_co_nm': product.kor_co_nm,
+            'join_way': product.join_way,
+            'spcl_cnd': product.spcl_cnd,
+            'etc_note': product.etc_note,
+            'options': list(options.values(
+                'id', 'intr_rate_type_nm', 'save_trm', 'intr_rate', 'intr_rate2'
+            ))
+        }
+        response_data.append(product_data)
+    return JsonResponse(response_data, safe=False)
+

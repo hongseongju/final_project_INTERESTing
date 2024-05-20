@@ -1,17 +1,29 @@
 <template>
   <div>
-    <h3>예금</h3>
-    <ul v-if="deposits.length">
-      <li v-for="deposit in deposits" :key="deposit.fin_prdt_cd">
-        {{ deposit.fin_prdt_nm }} - {{ deposit.kor_co_nm }}
-      </li>
-    </ul>
+    <h2>예금 상품 정보</h2>
+    <div v-if="financialProducts.length > 0">
+      <div v-for="product in financialProducts" :key="product.fin_prdt_cd" class="product">
+        <h5>{{ product.fin_prdt_nm }} ({{ product.kor_co_nm }})</h5>
+        <div v-if="product.options && product.options.length > 0">
+          <h3>옵션 리스트</h3>
+          <ul>
+            <li v-for="option in product.options" :key="option.id">
+              <p>{{ option.intr_rate_type_nm }} {{ option.save_trm }}개월 {{ option.intr_rate }}% ~ {{ option.intr_rate2 }}%</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div v-else>
+      <p>금융 상품 정보를 불러오는 중입니다...</p>
+    </div>
   </div>
 </template>
 
 <script setup>
 import { onMounted, ref } from 'vue'
 import axios from 'axios'
+import { useAuthStore } from '@/stores/counter'
 
 // 예금 데이터를 저장할 변수
 const deposits = ref([])
@@ -31,9 +43,31 @@ const fetchDeposits = () => {
 onMounted(() => {
   fetchDeposits()
 })
+
+// 예금 상세 정보 출력
+const financialProducts = ref([])
+  
+  onMounted(() => {
+    axios.get('http://127.0.0.1:8000/api_savings/deposit_detail/')
+      .then(response => {
+        financialProducts.value = response.data
+      })
+      .catch(error => {
+        console.error('Failed to fetch deposit detail:', error)
+      })
+  })
+  
+  const authStore = useAuthStore()
+
 </script>
 
 <style scoped>
+.product {
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
 div {
   border: 1px solid rgb(188, 255, 157);
   border-radius: 10px;

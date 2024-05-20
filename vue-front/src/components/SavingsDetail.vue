@@ -35,12 +35,12 @@
   const financialProducts = ref([])
   
   onMounted(() => {
-    axios.get('http://127.0.0.1:8000/api_savings/financial-products/')
+    axios.get('http://127.0.0.1:8000/api_savings/savings_detail/')
       .then(response => {
         financialProducts.value = response.data
       })
       .catch(error => {
-        console.error('Failed to fetch financial products:', error)
+        console.error('Failed to fetch savings_details:', error)
       })
   })
   

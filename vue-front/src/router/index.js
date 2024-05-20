@@ -9,7 +9,8 @@ import ExchangeRate from '@/views/ExchangeRateView.vue';
 import Present from '@/views/PresentView.vue';
 import InterestRate from '@/views/InterestRateView.vue';
 import CashRecharge from '@/components/CashRecharge.vue';
-import Financial from '@/components/Financial.vue';
+import SavingsDetail from '@/components/SavingsDetail.vue';
+import DepositDetail from '@/components/DepositDetail.vue';
 
 const routes = [
   { path: '/', name: 'Home', component: Home },
@@ -21,7 +22,8 @@ const routes = [
   { path: '/present', name: 'Present', component: Present },
   { path: '/interest_rate', name: 'InterestRate', component: InterestRate},
   { path: '/cash-charge', name: 'CashRecharge', component: CashRecharge },
-  { path: '/financial-products', name: 'Financial', component: Financial },
+  { path: '/savings_detail', name: 'SavingsDetail', component: SavingsDetail },
+  { path: '/deposit_detail', name: 'DepositDetail', component: DepositDetail },
 ];
 
 const router = createRouter({
