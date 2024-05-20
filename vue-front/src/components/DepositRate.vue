@@ -1,16 +1,17 @@
 <template>
   <div>
     <h2>예금 상품 정보</h2>
-    <div v-if="financialProducts.length > 0">
-      <div v-for="product in financialProducts" :key="product.fin_prdt_cd" class="product">
-        <h5>{{ product.fin_prdt_nm }} ({{ product.kor_co_nm }})</h5>
+    <div v-if="financialProducts.length > 0" class="product">
+      <div v-for="product in financialProducts" :key="product.fin_prdt_cd" >
+        <h5>{{ product.fin_prdt_nm }}</h5>
         <div v-if="product.options && product.options.length > 0">
-          <h3>옵션 리스트</h3>
-          <ul>
-            <li v-for="option in product.options" :key="option.id">
+          <ul v-for="option in product.options" :key="option.id">
+            <!-- <li v-for="option in product.options" :key="option.id">
               <p>{{ option.intr_rate_type_nm }} {{ option.save_trm }}개월 {{ option.intr_rate }}% ~ {{ option.intr_rate2 }}%</p>
-            </li>
+            </li> -->
           </ul>
+          <p>최소 {{ min_deposit(product.options) }}% ~ 최대 {{ max_deposit(product.options) }}%</p>
+          <hr>
         </div>
       </div>
     </div>
@@ -59,6 +60,25 @@ const financialProducts = ref([])
   
   const authStore = useAuthStore()
 
+// 최소 및 최대 금리 계산 함수
+const min_deposit = (options) => {
+  let minRate = Number.POSITIVE_INFINITY
+  for (const option of options) {
+    minRate = Math.min(minRate, option.intr_rate)
+    minRate = Math.min(minRate, option.intr_rate2)
+  }
+  return minRate
+}
+
+const max_deposit = (options) => {
+  let maxRate = Number.NEGATIVE_INFINITY
+  for (const option of options) {
+    maxRate = Math.max(maxRate, option.intr_rate)
+    maxRate = Math.max(maxRate, option.intr_rate2)
+  }
+  return maxRate
+}
+
 </script>
 
 <style scoped>
@@ -67,11 +87,6 @@ const financialProducts = ref([])
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
-}
-div {
-  border: 1px solid rgb(188, 255, 157);
-  border-radius: 10px;
-  padding: 10px;
 }
 
 h3 {

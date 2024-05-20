@@ -39,5 +39,3 @@ def exchage_rate(request):
     rate = Exchange.objects.all()
     serializer = ExchangeSerializer(rate, many=True)
     return Response(serializer.data)
-
-#{ 'message': "exchage save okay!"}
