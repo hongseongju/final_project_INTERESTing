@@ -1,26 +1,32 @@
 <template>
     <div>
-        <h3>환율 계산
-            <select v-model="selectedExchange">
+        <h3>환율 계산</h3>
+        <select v-model="selectedExchange">
             <option :value="null">국가를 선택하세요</option>
             <option v-for="exchange in exchanges" :value="exchange"
             :key="exchange.id">
             {{  exchange.cur_nm  }}
             </option>
         </select>
-        </h3>
         <input type="text" v-model.number="amount" placeholder="환전할 금액">{{ selectedExchange?.cur_unit }}은 {{ calculateResult.toFixed(2) }}원(\) 입니다
     </div>
-
 
     <div>
         <h3>오늘의 환율</h3>
         <ul v-if="exchanges.length">
-            <li v-for="exchange in exchanges" :key="exchange.id">
-                {{ exchange }} <br>
-                국가 {{ exchange.cur_nm }} | {{ exchange.deal_bas_r }}
-                <hr>
-            </li>
+            <div class="row">
+                <div v-for="exchange in exchanges" :key="exchange.id" class="col">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <img :src="`/src/assets/flags/${exchange.id}.png`" alt="national image">
+                                {{ exchange.cur_nm }}[{{ exchange.cur_unit }}]</h5>
+                            <h4 class="card-text">{{ exchange.deal_bas_r }} </h4>
+                        </div>
+                    </div>
+                    <!-- {{ exchange }} <br> -->
+                </div>
+        </div>
         </ul>
     </div>
 </template>
@@ -63,9 +69,9 @@ const calculateResult = computed(() => {
 </script>
 
 <style scoped>
-div {
-    border: 1px solid rgb(188, 255, 157);
-    border-radius: 10px;
+img {
+    width: 30px;
+    height: 30px;
 }
 select {
     text-align:center;
