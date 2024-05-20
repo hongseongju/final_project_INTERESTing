@@ -6,7 +6,7 @@ class ArticleListSerializer(serializers.ModelSerializer):
     nickname = serializers.CharField(source='user.nickname', read_only=True)
     class Meta:
         model = Article
-        fields = ('nickname', 'title', 'content',)
+        fields = ('id', 'nickname', 'title', 'content',)
 
 # 단일 게시글 데이터 조회
 class ArticleSerializer(serializers.ModelSerializer):

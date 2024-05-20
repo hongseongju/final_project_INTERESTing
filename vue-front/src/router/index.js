@@ -26,7 +26,7 @@ const routes = [
   { path: '/profile', name: 'Profile', component: Profile },
   { path: '/exchange_rate', name: 'ExchangeRate', component: ExchangeRate },
   { path: '/present', name: 'Present', component: Present },
-  { path: '/interest_rate', name: 'InterestRate', component: InterestRate},
+  { path: '/interest_rate', name: 'InterestRate', component: InterestRate },
   { path: '/cash-charge', name: 'CashRecharge', component: CashRecharge },
   { path: '/savings_detail', name: 'SavingsDetail', component: SavingsDetail },
   { path: '/deposit_detail', name: 'DepositDetail', component: DepositDetail },
@@ -35,7 +35,7 @@ const routes = [
   { path: '/articles', name: 'ArticleList', component: ArticleList },
   { path: '/articles/:id', name: 'ArticleDetail', component: ArticleDetail },
   { path: '/new-article', name: 'NewArticle', component: ArticleForm },
-  { path: '/articles/view/:id', name: 'ArticleView', component: ArticleView } // ArticleView 경로 추가
+  { path: '/articles/view/:id', name: 'ArticleView', component: ArticleView }
 ];
 
 const router = createRouter({
@@ -43,11 +43,13 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, from) => {
+router.beforeEach((to, from, next) => {  // 'next' 파라미터 추가
   const store = useAuthStore();
   if ((to.name === 'SignUp' || to.name === 'Login') && store.isLogin) {
     window.alert('이미 로그인이 되어 있습니다. (●ˇ∀ˇ●)');
-    return { name: 'Home' };
+    next({ name: 'Home' });
+  } else {
+    next();  // 반드시 next()를 호출하여 라우터가 계속 진행되도록 합니다.
   }
 });
 
