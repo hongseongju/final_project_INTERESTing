@@ -7,6 +7,7 @@
     </header>
     <router-link to="/cash-charge">캐시 충전하기</router-link>
     <PopularStock />
+    <ArticleList />
 </template>
 
 <script setup>
@@ -14,6 +15,7 @@ import { computed, onMounted } from 'vue';
 import { useAuthStore } from '@/stores/counter';
 import { RouterLink, RouterView } from 'vue-router';
 import PopularStock from '../components/PopularStock.vue'
+import ArticleList from '@/components/ArticleList.vue';
 </script>
 
 <style scoped>

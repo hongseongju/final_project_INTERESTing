@@ -1,24 +1,27 @@
 <template>
   
  <div v-if="article">
+
     <h1>제목: {{ article.title }}</h1>
-    <p>본문: {{ article.content }}</p>
-    <p>작성자: {{ article.user }}</p>
-    <p>작성일: {{ article.created_at }}</p>
+    <p>작성자: {{ article.nickname }}</p>
+    <p>{{ article.content }}</p>
+    <p>작성일: {{ Date(article.created_at) }}</p>
 
     <div>
-      <h2>댓글</h2>
-      <ul>
-        <li v-for="comment in article.comment_set" :key="comment.id">
-          <p>{{ comment.content }}</p>
-          <!-- <p>작성자: {{ comment.user }}</p> -->
-          <p>작성일: {{ comment.created_at }}</p>
-        </li>
-      </ul>
+      <h3>댓글</h3>
       <form @submit.prevent="addComment">
         <textarea v-model="newCommentContent"></textarea>
         <button type="submit">댓글 작성</button>
       </form>
+      <ul>
+        <li v-for="comment in article.comment_set" :key="comment.id">
+      
+          <p>작성자: {{ comment.nickname }}</p>
+          <p>🌸{{ comment.content }}🌸</p>
+          <p>작성일: {{ comment.created_at }}</p>
+          <hr>
+        </li>
+      </ul>
     </div>
     <router-link to="/articles">목록으로</router-link>
   </div>
@@ -67,10 +70,7 @@ const addComment = function () {
       })
   }
 
-// const formatDate = function () {
-//       const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }
-//       return new Date(date).toLocaleString('ko-KR', options)
-//   }
+
 
 onMounted(()=> {
   fetchArticle()
