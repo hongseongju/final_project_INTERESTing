@@ -35,7 +35,7 @@ export default {
         }
       })
       .then(response => {
-        router.push('/');
+        router.push('/articles');
       })
       .catch(error => {
         console.error(error);
