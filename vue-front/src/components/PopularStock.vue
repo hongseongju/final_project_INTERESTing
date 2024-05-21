@@ -53,7 +53,7 @@ onMounted(() => {
   gap: 1rem;
   padding: 0;
 }
-/* 
+
 .main-bar {
   position: relative;
   font-size: 1.5rem;
@@ -67,7 +67,7 @@ onMounted(() => {
   background-color: #00000052;
   flex: 1;
   transition: 0.2s ease-in-out;
-} */
+}
 
 .main-container::-webkit-scrollbar {
   height: 10px;

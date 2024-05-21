@@ -1,6 +1,7 @@
 <template>
-    <div>
-        <h3>환율 계산</h3>
+    <header>
+        <div>
+        <h1>환율 계산</h1>
         <select v-model="selectedExchange">
             <option :value="null">국가를 선택하세요</option>
             <option v-for="exchange in exchanges" :value="exchange"
@@ -10,6 +11,7 @@
         </select>
         <input type="text" v-model.number="amount" placeholder="환전할 금액">{{ selectedExchange?.cur_unit }}은 {{ calculateResult }}원(\) 입니다
     </div>
+    </header>
 
     <div>
         <h3>오늘의 환율</h3>
@@ -69,6 +71,12 @@ const calculateResult = computed(() => {
 </script>
 
 <style scoped>
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 img {
     width: 30px;
     height: 30px;

@@ -26,7 +26,7 @@ header {
 }
 .text-container {
     position: absolute; /* 절대 위치 설정 */
-    top: 50%; /* 세로 이동 */
+    top: 30%; /* 세로 이동 */
     left: 80%; /* 가로 이동 */
     transform: translate(-50%, -50%);     
 }

@@ -1,19 +1,21 @@
 <template>
   <header>
-  <div>
-    <h1 class="ercword">주변 은행 검색</h1>
     <div>
-        <select v-model="result" id="keyword" placeholder="은행명 입력" class="custom-border">
-          <option value="" disabled>은행 선택</option>
+    <h1 class="m-4">주변 은행 검색</h1>
+    <div class="m-2">
+        <select v-model="result" id="keyword" class="custom-border">
+          <option value="" selected disabled>은행 선택</option>
           <option v-for="(bank, index) in banks" :key="index" :value="bank">
           {{ bank }}
           </option>
-          </select>  |  
-        <input type="text" id="region" size="15" placeholder="지역 입력" class="custom-border" />
+        </select>  |  
+        <input type="text" id="region" size="20" placeholder="내 근처 지역 입력" class="custom-border" />
         <button @click="searchPlaces" class="custom-border">검색하기</button>
       </div>
-      </div>
-        </header>
+    </div>
+  </header>
+  <!-- 카카오맵 출력 부분 -->
+  <main>
     <div class="container custom-border">
       <div id="menu_wrap" class="bg_white">
         <div class="option">
@@ -27,7 +29,7 @@
       <ul id="placesList"></ul>
     </div>
   </div>
-
+</main>
 </template>
 
 <script>
@@ -37,7 +39,7 @@ export default {
   data() {
     return {
       selectBank: '',
-      banks: ['국민은행', '기업은행', '광주은행', '신한은행', '전북은행']
+      banks: ['국민은행', '신한은행', '우리은행', '하나은행', '농협은행', 'IBK기업은행', '산업은행', '새마을금고', '신협', '수협', '광주은행', '전북은행', '대구은행', '경남은행', '부산은행', '제주은행', 'SC제일은행']
     }
   },
   mounted() {
@@ -204,8 +206,8 @@ export default {
 
 
 <style>
-main {
-  /* display: flex; */
+header {
+  display: flex;
   justify-content: center;
   align-items: center;
 }

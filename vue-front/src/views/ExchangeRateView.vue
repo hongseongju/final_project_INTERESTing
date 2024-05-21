@@ -1,10 +1,7 @@
 <template>
-  <main>
-    <h1>환율 계산기</h1>
     <div>
         <Exchange />        
     </div>
-  </main>
 </template>
 
 
