@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'articles',
     'savings',
     'exchange_rate',
+    'stock_list',
     'django.contrib.sites',  # allauth가 필요로 하는 앱
     'allauth',
     'allauth.account',
