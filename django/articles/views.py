@@ -28,7 +28,20 @@ def article_detail_update_delete(request, article_pk):
         serializer = ArticleSerializer(article)
         return Response(serializer.data)
     
+    # elif request.method == 'PUT':
+    #     serializer = ArticleSerializer(article, data=request.data, partial=True)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data)
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    # elif request.method == 'DELETE':
+    #     article.delete()
+    #     return Response(status=status.HTTP_204_NO_CONTENT)
     elif request.method == 'PUT':
+        if article.user != request.user:
+            return Response({'detail': '권한이 없습니다.'}, status=status.HTTP_403_FORBIDDEN)
+        
         serializer = ArticleSerializer(article, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
@@ -36,6 +49,9 @@ def article_detail_update_delete(request, article_pk):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     elif request.method == 'DELETE':
+        if article.user != request.user:
+            return Response({'detail': '권한이 없습니다.'}, status=status.HTTP_403_FORBIDDEN)
+        
         article.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -63,12 +79,29 @@ def comment_detail_update_delete(request, comment_pk):
         serializer = CommentSerializer(comment)
         return Response(serializer.data)
     
+    # elif request.method == 'DELETE':
+    #     comment.delete()
+    #     return Response(status=status.HTTP_204_NO_CONTENT)
+    
+    # elif request.method == 'PUT':
+    #     serializer = CommentSerializer(comment, data=request.data)
+    #     if serializer.is_valid(raise_exception=True):
+    #         serializer.save()
+    #         return Response(serializer.data, status=status.HTTP_200_OK)
     elif request.method == 'DELETE':
+        if comment.user != request.user:
+            return Response({'detail': '권한이 없습니다.'}, status=status.HTTP_403_FORBIDDEN)
+        
         comment.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
     
     elif request.method == 'PUT':
+        if comment.user != request.user:
+            return Response({'detail': '권한이 없습니다.'}, status=status.HTTP_403_FORBIDDEN)
+        
         serializer = CommentSerializer(comment, data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    

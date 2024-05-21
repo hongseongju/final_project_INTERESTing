@@ -16,7 +16,7 @@ import DepositDetail from '@/components/DepositDetail.vue';
 import ArticleList from '@/components/ArticleList.vue';
 import ArticleDetail from '@/components/ArticleDetail.vue';
 import ArticleForm from '@/components/ArticleForm.vue';
-import ArticleView from '@/views/ArticleView.vue'; // ArticleView 추가
+import ArticleView from '@/views/ArticleView.vue'; 
 
 const routes = [
   { path: '/', name: 'Home', component: Home },
@@ -35,7 +35,8 @@ const routes = [
   { path: '/articles', name: 'ArticleList', component: ArticleList },
   { path: '/articles/:id', name: 'ArticleDetail', component: ArticleDetail },
   { path: '/new-article', name: 'NewArticle', component: ArticleForm },
-  { path: '/articles/view/:id', name: 'ArticleView', component: ArticleView }
+  { path: '/articles/view/:id', name: 'ArticleView', component: ArticleView },
+  { path: '/articles/:id/edit', name: 'EditArticle', component: ArticleForm },
 ];
 
 const router = createRouter({

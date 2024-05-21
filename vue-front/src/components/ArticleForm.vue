@@ -15,21 +15,29 @@
 <script>
 import axios from 'axios';
 import { useAuthStore } from '@/stores/counter';
-import { useRouter } from 'vue-router';
-import { ref } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
+import { ref, onMounted } from 'vue';
 
 export default {
   setup() {
     const authStore = useAuthStore();
     const router = useRouter();
+    const route = useRoute();
     const title = ref('');
     const content = ref('');
 
     const submitArticle = () => {
-      axios.post('http://localhost:8000/articles/', {
+      const payload = {
         title: title.value,
         content: content.value
-      }, {
+      };
+
+      const url = route.params.id
+        ? `http://localhost:8000/articles/${route.params.id}/`
+        : 'http://localhost:8000/articles/';
+      const method = route.params.id ? 'put' : 'post';
+
+      axios[method](url, payload, {
         headers: {
           Authorization: `Token ${authStore.token}`
         }
@@ -42,6 +50,23 @@ export default {
       });
     };
 
+    const fetchArticle = () => {
+      if (route.params.id) {
+        axios.get(`http://localhost:8000/articles/${route.params.id}/`)
+          .then(response => {
+            title.value = response.data.title;
+            content.value = response.data.content;
+          })
+          .catch(error => {
+            console.error('게시글 가져오기 실패:', error.response ? error.response.data : error.message);
+          });
+      }
+    };
+
+    onMounted(() => {
+      fetchArticle();
+    });
+
     return {
       title,
       content,
@@ -50,3 +75,7 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+/* 추가적인 스타일 정의 가능 */
+</style>
