@@ -10,7 +10,10 @@ class ArticleListSerializer(serializers.ModelSerializer):
 
 # 단일 게시글 데이터 조회
 class ArticleSerializer(serializers.ModelSerializer):
+    nickname = serializers.CharField(source='user.nickname', read_only=True)
     class CommentSerializer(serializers.ModelSerializer):
+        nickname = serializers.CharField(source='user.nickname', read_only=True)
+
         class Meta:
             model = Comment
             fields = '__all__'
@@ -23,12 +26,14 @@ class ArticleSerializer(serializers.ModelSerializer):
 
 # 댓글 목록 조회
 class CommentSerializer(serializers.ModelSerializer):
+    nickname = serializers.CharField(source='user.nickname', read_only=True)
+
     class ArticleTitleSerializer(serializers.ModelSerializer):
         class Meta:
             model = Article
             fields = ('title',)  
     article = ArticleTitleSerializer(read_only=True)  
-    user = serializers.CharField(source='user.username', read_only=True)  # user 필드를 read-only로 설정
+    user = serializers.CharField(source='user.nickname', read_only=True)  # user 필드를 read-only로 설정
     
     class Meta:
         model = Comment
