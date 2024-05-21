@@ -14,7 +14,7 @@ class FinancialProduct(models.Model):
     def __str__(self):
         return self.fin_prdt_nm
 
-
+# 하이하이
 class OptionList(models.Model):
     financial_product = models.ForeignKey(FinancialProduct, related_name='options', on_delete=models.CASCADE)
     fin_prdt_cd = models.CharField(max_length=50)       # 금융 상품 코드
