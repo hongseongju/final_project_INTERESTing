@@ -5,11 +5,11 @@
       <div v-for="product in financialProducts" :key="product.fin_prdt_cd" >
         <h5>{{ product.fin_prdt_nm }}</h5>
         <div v-if="product.options && product.options.length > 0">
-          <ul v-for="option in product.options" :key="option.id">
-            <!-- <li v-for="option in product.options" :key="option.id">
+          <!-- <ul v-for="option in product.options" :key="option.id">
+            <li v-for="option in product.options" :key="option.id">
               <p>{{ option.intr_rate_type_nm }} {{ option.save_trm }}개월 {{ option.intr_rate }}% ~ {{ option.intr_rate2 }}%</p>
-            </li> -->
-          </ul>
+            </li>
+          </ul> -->
           <p>최소 {{ min_deposit(product.options) }}% ~ 최대 {{ max_deposit(product.options) }}%</p>
           <hr>
         </div>

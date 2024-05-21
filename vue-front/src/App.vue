@@ -42,6 +42,7 @@
       </div>
     </nav>
     <RouterView />
+
   </div>
 </template>
 
@@ -75,5 +76,13 @@ const logout = () => {
 .font-weight-bold {
   font-weight: bold;
   color: #fff !important; /* 텍스트 색상 변경 */
+}
+
+.sticky {
+  position:sticky; 
+  top:10px; left:10px; 
+  width:100px; height:100px; 
+  background:red;
+  z-index: 9999;
 }
 </style>

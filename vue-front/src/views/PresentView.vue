@@ -18,16 +18,16 @@ import PopularStock from '../components/PopularStock.vue'
 
 <style scoped>
 header {
-    background-image: url('../assets/stock_mainpage.jpg');
+    background-image: url('../assets/stock_mainpage.webp');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center; /* 이미지 중앙 배치 */
-    height: 100vh;
+    height: 60vh;
 }
 .text-container {
     position: absolute; /* 절대 위치 설정 */
-    top: 40%; /* 세로 이동 */
-    left: 20%; /* 가로 이동 */
+    top: 50%; /* 세로 이동 */
+    left: 80%; /* 가로 이동 */
     transform: translate(-50%, -50%);     
 }
 

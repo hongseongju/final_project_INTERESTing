@@ -13,9 +13,6 @@
                 </li>
             </ul>
         </div>
-        <div class="community">
-            <h1>커뮤니티 창구</h1>
-        </div>
     </div>
 </template>
 

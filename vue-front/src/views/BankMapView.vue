@@ -1,34 +1,33 @@
 <template>
+  <header>
   <div>
     <h1 class="ercword">주변 은행 검색</h1>
+    <div>
+        <select v-model="result" id="keyword" placeholder="은행명 입력" class="custom-border">
+          <option value="" disabled>은행 선택</option>
+          <option v-for="(bank, index) in banks" :key="index" :value="bank">
+          {{ bank }}
+          </option>
+          </select>  |  
+        <input type="text" id="region" size="15" placeholder="지역 입력" class="custom-border" />
+        <button @click="searchPlaces" class="custom-border">검색하기</button>
+      </div>
+      </div>
+        </header>
     <div class="container custom-border">
       <div id="menu_wrap" class="bg_white">
         <div class="option">
-          <div>
-            <select v-model="result" id="keyword" placeholder="은행명 입력" class="custom-border">
-              <option value="" disabled>은행 선택</option>
-              <option v-for="(bank, index) in banks"
-              :key="index"
-              :value="bank"
-              >
-              {{ bank }}
-              </option>
-              </select>  |  
-            <input type="text" id="region" size="15" placeholder="지역 입력" class="custom-border" />
-            <button @click="searchPlaces" class="custom-border">검색하기</button>
-          </div>
         </div>
       </div>
     </div>
-  </div>
   <div class="flex">
     <div id="map" class="map child"></div>
     <div>
       <div id="pagination"></div>
       <ul id="placesList"></ul>
-
     </div>
   </div>
+
 </template>
 
 <script>
@@ -205,6 +204,12 @@ export default {
 
 
 <style>
+main {
+  /* display: flex; */
+  justify-content: center;
+  align-items: center;
+}
+
 .container {
   display: flex;
 }

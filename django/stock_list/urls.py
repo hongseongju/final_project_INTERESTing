@@ -3,4 +3,5 @@ from . import views
 
 urlpatterns = [
     path('popular/', views.popular),
+    # path('high')
 ]

@@ -11,7 +11,6 @@ from .serializers import DepositProductSerializer, DepositOptionSerializer
 # Create your views here.
 BASE_URL = 'http://finlife.fss.or.kr/finlifeapi/'
 
-# !! env로 이동 필요
 ACCOUNT_API_KEY = settings.ACCOUNT_API_KEY
 
 @api_view(['GET'])
@@ -169,7 +168,7 @@ def savings_detail(request):
     return JsonResponse(response_data, safe=False)
 
 
-# 적금 상세
+# 예금 상세
 def deposit_detail(request):
     products = DepositProduct.objects.all()
     response_data = []
