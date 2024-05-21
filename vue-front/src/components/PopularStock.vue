@@ -1,11 +1,21 @@
 <template>
     <div>
-        <h3>인기 주식</h3>
-        <ul v-if="stocks.length">
-            <li v-for="stock in stocks" :key="stock.id">
-                {{ stock }}
-            </li>
-        </ul>
+        <h3>오늘의 인기 주식</h3>
+        <div class="main-container">
+            <ul v-if="stocks.length" class="main">
+                <li v-for="stock in stocks" class="card main-bar" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ stock.stockName }}</h5>
+                        <h6 class="card-subtitle mb-2 text-body-secondary">{{ stock.compareToPreviousClosePrice }}원 {{ stock.text }} </h6>
+                        <p class="card-text"><h3>{{ stock.closePrice }}원</h3></p>
+                        <a href="#" class="btn btn-primary">선물하기</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="community">
+            <h1>커뮤니티 창구</h1>
+        </div>
     </div>
 </template>
 
@@ -32,3 +42,55 @@ onMounted(() => {
     StockData()
 })
 </script>
+
+<style>
+.main-container {
+  overflow-x: auto;
+  white-space: nowrap;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.main{
+  display: inline-flex;
+  gap: 1rem;
+  padding: 0;
+}
+/* 
+.main-bar {
+  position: relative;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  border-radius: 10px;
+  padding: 1rem;
+
+  height: 150px;
+  background-color: #00000052;
+  flex: 1;
+  transition: 0.2s ease-in-out;
+} */
+
+.main-container::-webkit-scrollbar {
+  height: 10px;
+}
+
+.main-container::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+.main-container::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+
+.community {
+  background-image: linear-gradient(30deg, #e3f8b6, #cadf2a, #808d1b);
+  padding-top: 200px; 
+  padding-bottom: 500px;
+
+}
+
+</style>

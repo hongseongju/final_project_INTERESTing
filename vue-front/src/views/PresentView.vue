@@ -1,5 +1,4 @@
 <template>
-    <h1>주식 선물하기 페이지</h1>
     <header>
         <div class="text-container">
             <p class="white">소중한 사람에게 <br> 소중한 미래를</p>
@@ -20,12 +19,13 @@ import PopularStock from '../components/PopularStock.vue'
 <style scoped>
 header {
     background-image: url('../assets/stock_mainpage.jpg');
-    background-size : contain;
+    background-size: cover;
     background-repeat: no-repeat;
+    background-position: center; /* 이미지 중앙 배치 */
     height: 100vh;
 }
 .text-container {
-    position: absolute; /* 절대 위치로 설정 */
+    position: absolute; /* 절대 위치 설정 */
     top: 40%; /* 세로 이동 */
     left: 20%; /* 가로 이동 */
     transform: translate(-50%, -50%);     

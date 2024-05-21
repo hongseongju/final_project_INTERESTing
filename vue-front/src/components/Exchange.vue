@@ -8,7 +8,7 @@
             {{  exchange.cur_nm  }}
             </option>
         </select>
-        <input type="text" v-model.number="amount" placeholder="환전할 금액">{{ selectedExchange?.cur_unit }}은 {{ calculateResult.toFixed(2) }}원(\) 입니다
+        <input type="text" v-model.number="amount" placeholder="환전할 금액">{{ selectedExchange?.cur_unit }}은 {{ calculateResult }}원(\) 입니다
     </div>
 
     <div>
@@ -61,7 +61,7 @@ const calculateResult = computed(() => {
     if (selectedExchange.value) {
         console.log(selectedExchange.value.id)
         const exchangeRate = (selectedExchange.value.id === 12 || selectedExchange.value.id === 13) ? parseFloat(selectedExchange.value.ttb) / 100 : parseFloat(selectedExchange.value.ttb)
-        return amount.value * exchangeRate
+        return Math.round(amount.value * exchangeRate)
     }
     return 0
 })
@@ -83,5 +83,4 @@ input {
     width:100px;
     height:20px;
 }
-
 </style>

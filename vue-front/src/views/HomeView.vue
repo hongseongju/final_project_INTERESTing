@@ -1,6 +1,6 @@
 <template>
   <main>
-    <div class="container">
+    <div class="text-container">
       <h4>각티슈 뽑듯 간편하게</h4>
       <h1>INTERESTing(´▽`ʃ♡ƪ)</h1>
       <!-- <ChatBot/> -->
@@ -57,6 +57,14 @@ main {
   padding-bottom: 500px;
 
 }
+
+.text-container {
+    position: absolute; /* 절대 위치 설정 */
+    top: 40%; /* 세로 이동 */
+    left: 20%; /* 가로 이동 */
+    transform: translate(-50%, -50%);     
+}
+
 article {
   background-color: #01415B;
   padding-top: 200px; 
