@@ -46,26 +46,19 @@ def comment_list(request):
     serializer = CommentSerializer(comments, many=True)
     return Response(serializer.data)
 
-# 단일 댓글 조회
-@api_view(['GET'])
-def comment_detail(request, comment_pk):
-    comment = Comment.objects.get(pk=comment_pk)
-    serializer = CommentSerializer(comment)
-    return Response(serializer.data)
-
 # 단일 댓글 생성
 @api_view(['POST'])
 def comment_create(request, article_pk):
-    article = Article.objects.get(pk=article_pk)
+    article = get_object_or_404(Article, pk=article_pk)
     serializer = CommentSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
-        serializer.save(article=article)
+        serializer.save(article=article, user=request.user)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-# 단일 댓글 수정 및 삭제
+# 단일 댓글 조회, 수정 및 삭제
 @api_view(['GET', 'DELETE', 'PUT'])
-def comment_detail(request, comment_pk):
-    comment = Comment.objects.get(pk=comment_pk)
+def comment_detail_update_delete(request, comment_pk):
+    comment = get_object_or_404(Comment, pk=comment_pk)
     if request.method == 'GET':
         serializer = CommentSerializer(comment)
         return Response(serializer.data)

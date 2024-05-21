@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Articles</h1>
+    <h1>게시글 목록</h1>
     <ul>
       <li v-for="article in articles" :key="article.id">
         <router-link :to="{ name: 'ArticleView', params: { id: article.id } }">
@@ -9,9 +9,11 @@
       </li>
     </ul>
   </div>
+  <router-link to="/new-article">글쓰기</router-link>
 </template>
 
 <script>
+import { RouterLink, RouterView } from 'vue-router';
 import axios from 'axios';
 
 export default {
