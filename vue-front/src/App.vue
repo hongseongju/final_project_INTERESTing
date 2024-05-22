@@ -23,6 +23,9 @@
             <li class="nav-item">
               <RouterLink class="nav-link" to="/articles">커뮤니티</RouterLink>
             </li>
+            <li class="nav-item">
+              <RouterLink class="nav-link" to="/chat_bot">예적금 추천 챗봇</RouterLink>
+            </li>
           </ul>
           <ul class="navbar-nav">
             <li v-if="isLogin" class="nav-item">

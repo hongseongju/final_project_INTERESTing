@@ -12,6 +12,7 @@ import InterestRate from '@/views/InterestRateView.vue';
 import CashRecharge from '@/components/CashRecharge.vue';
 import SavingsDetail from '@/components/SavingsDetail.vue';
 import DepositDetail from '@/components/DepositDetail.vue';
+import ChatBot from '@/views/ChatBotView.vue'
 
 // 게시판 관련 컴포넌트 추가
 import ArticleList from '@/components/ArticleList.vue';
@@ -32,6 +33,7 @@ const routes = [
   { path: '/cash-charge', name: 'CashRecharge', component: CashRecharge },
   { path: '/savings_detail', name: 'SavingsDetail', component: SavingsDetail },
   { path: '/deposit_detail', name: 'DepositDetail', component: DepositDetail },
+  { path: '/chat_bot', name: 'ChatBot', component: ChatBot },
   
   // 게시판 관련 경로 추가
   { path: '/articles', name: 'ArticleList', component: ArticleList },
