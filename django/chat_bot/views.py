@@ -86,11 +86,15 @@ def chat_bot(request):
         chat_history.append(
             {"role": "system", "content": f"만약 은행에 대해 물어보면 {product_info}의 kor_co_nm 정보에 기반해서 5개 정도 알려줘."}
         )
-    if '예금' in input_message and '추천' in input_message:
+    if '예금' in input_message and  '적금' in input_message and '추천' in input_message:
+        chat_history.append(
+            {"role": "system", "content": f"만약 예금, 적금 상품을 추천한다면 {input_message}와 {product_info}의 spcl_cnd 정보에 기반해서 예금, 적금 상품을 합쳐서 3개 정도 추천해줘."}
+        )
+    elif '예금' in input_message and '추천' in input_message:
         chat_history.append(
             {"role": "system", "content": f"만약 예금 상품을 추천한다면 {input_message}와 {product_info}의 spcl_cnd 정보에 기반해서 예금 상품을 3개 정도 추천해줘. 적금은 추천해주면 안돼"}
         )
-    if '적금' in input_message and '추천' in input_message:
+    elif '적금' in input_message and '추천' in input_message:
         chat_history.append(
             {"role": "system", "content": f"만약 적금 상품을 추천한다면 {input_message}와 {product_info}의 spcl_cnd 정보에 기반해서 적금 상품을 3개 정도 추천해줘. 예금은 추천해주면 안돼" }
         )

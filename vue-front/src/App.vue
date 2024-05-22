@@ -9,23 +9,24 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
+              <RouterLink class="nav-link" to="/interest_rate">예적금 비교</RouterLink>
+            </li>
+            <li class="nav-item">
+              <RouterLink class="nav-link" to="/chat_bot">예적금 AI 추천</RouterLink>
+            </li>
+            <li class="nav-item">
+              <RouterLink class="nav-link" to="/present">주식 선물하기</RouterLink>
+            </li>
+            <li class="nav-item">
               <RouterLink class="nav-link" to="/bank_map">내 주변 은행</RouterLink>
             </li>
             <li class="nav-item">
               <RouterLink class="nav-link" to="/exchange_rate">환율 계산기</RouterLink>
             </li>
             <li class="nav-item">
-              <RouterLink class="nav-link" to="/present">주식 선물하기</RouterLink>
-            </li>
-            <li class="nav-item">
-              <RouterLink class="nav-link" to="/interest_rate">예적금 비교</RouterLink>
-            </li>
-            <li class="nav-item">
               <RouterLink class="nav-link" to="/articles">커뮤니티</RouterLink>
             </li>
-            <li class="nav-item">
-              <RouterLink class="nav-link" to="/chat_bot">예적금 AI 추천</RouterLink>
-            </li>
+
           </ul>
           <ul class="navbar-nav">
             <li v-if="isLogin" class="nav-item">
