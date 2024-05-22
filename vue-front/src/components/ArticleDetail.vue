@@ -4,8 +4,10 @@
     <p>작성자: {{ article.nickname }}</p>
     <p>{{ article.content }}</p>
     <p>작성일: {{ new Date(article.created_at).toLocaleString() }}</p>
-    <button @click="editArticle" v-if="authStore.user.pk===article.user.pk">글 수정</button>
-    <button @click="deleteArticle" v-if="authStore.user.pk===article.user.pk">글 삭제</button>
+    <pre>{{ authStore.user }}</pre> <!-- 사용자 정보를 출력하여 확인 -->
+
+    <button @click="editArticle" v-if="authStore.user && authStore.user.pk === article.user.pk">글 수정</button>
+    <button @click="deleteArticle" v-if="authStore.user && authStore.user.pk === article.user.pk">글 삭제</button>
 
     <div>
       <h3>댓글</h3>
@@ -24,14 +26,17 @@
             <p>작성자: {{ comment.nickname }}</p>
             <p>🌸{{ comment.content }}🌸</p>
             <p>작성일: {{ new Date(comment.created_at).toLocaleString() }}</p>
-            <button @click="editComment(comment)" v-if="authStore.user.pk===article.user.pk">댓글 수정</button>
-            <button @click="deleteComment(comment.id)" v-if="authStore.user.pk===article.user.pk">댓글 삭제</button>
+            <button @click="editComment(comment)" v-if="authStore.user && authStore.user.pk === comment.user.pk">댓글 수정</button>
+            <button @click="deleteComment(comment.id)" v-if="authStore.user && authStore.user.pk === comment.user.pk">댓글 삭제</button>
           </div>
           <hr>
         </li>
       </ul>
     </div>
     <router-link to="/articles">목록으로</router-link>
+  </div>
+  <div v-else>
+    <p>Loading...</p>
   </div>
 </template>
 
@@ -56,6 +61,7 @@ const fetchArticle = function () {
       article.value = response.data;
       console.log('Article Data:', article.value);
       console.log('Comment Set:', article.value.comment_set);
+      console.log('User Info:', authStore.user);  // 사용자 정보 로그 출력
       return response.data;
     })
     .catch(error => {

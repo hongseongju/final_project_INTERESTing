@@ -2,6 +2,8 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from .models import CustomUser
+from dj_rest_auth.views import UserDetailsView
+from .serializers import CustomUserDetailsSerializer
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -32,3 +34,8 @@ def change_nickname(request):
     user.save()
 
     return Response({"success": "Nickname changed successfully"}, status=200)
+
+
+
+class CustomUserDetailsView(UserDetailsView):
+    serializer_class = CustomUserDetailsSerializer

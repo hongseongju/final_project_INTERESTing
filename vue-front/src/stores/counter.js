@@ -34,11 +34,12 @@ export const useAuthStore = defineStore('auth', () => {
     })
     .then(response => {
       if (response.data.key) {
-        user.value = { username: username };
         token.value = response.data.key;
         console.log('로그인 성공!');
-        router.push({ name: 'Home' });
         setAuthHeaders();
+        fetchUserDetails().then(() => {
+          router.push({ name: 'Home' });
+        });
       } else {
         console.error('로그인 응답에 토큰이 없습니다.');
       }
@@ -61,10 +62,10 @@ export const useAuthStore = defineStore('auth', () => {
   };
 
   const fetchUserDetails = () => {
-    return axios.get(`${API_URL}dj-rest-auth/user/`)
+    return axios.get(`${API_URL}accounts/user/`)
     .then(response => {
       user.value = response.data;
-      console.log(response.data);
+      console.log('사용자 정보:', response.data);
     })
     .catch(error => {
       console.error(error);
@@ -88,10 +89,6 @@ export const useAuthStore = defineStore('auth', () => {
   const changeNickname = (newNickname) => {
     return axios.put(`${API_URL}accounts/change-nickname/`, {
       nickname: newNickname
-    }, {
-      headers: {
-        Authorization: `Token ${token.value}`
-      }
     })
     .then(() => {
       console.log('닉네임 변경 성공!');
@@ -101,7 +98,6 @@ export const useAuthStore = defineStore('auth', () => {
       console.error('닉네임 변경 실패:', error.response ? error.response.data : error.message);
     });
   };
-  
 
   const resetPassword = (email) => {
     return axios.post(`${API_URL}dj-rest-auth/password/reset/`, { email })
