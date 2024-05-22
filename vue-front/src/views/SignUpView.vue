@@ -119,7 +119,7 @@ h1 {
 }
 
 .form-control.no-border-left {
-  border-left: 0;
+  border-left: 0;   
 }
 .custom-btn {
   height: 45px; /* 버튼 높이를 조정합니다 */
