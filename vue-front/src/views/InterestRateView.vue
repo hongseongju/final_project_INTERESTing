@@ -2,7 +2,8 @@
   <main>
     <h1>예적금 금리 비교</h1>
     <div>
-      <router-link to="/savings_detail">한번에 보기</router-link>
+      <router-link to="/savings_detail">적금 한번에 보기</router-link> |
+      <router-link to="/deposit_detail">예금 한번에 보기</router-link>
       <div class="flex">
         <DepositRate />        
         <SavingsRate />

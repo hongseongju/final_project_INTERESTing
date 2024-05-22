@@ -35,7 +35,7 @@
   const financialProducts = ref([])
   
   onMounted(() => {
-    axios.get('http://127.0.0.1:8000/api_savings/deposit_detail/')
+    axios.get('http://127.0.0.1:8000/api_deposit/deposit_detail/')
       .then(response => {
         financialProducts.value = response.data
       })
