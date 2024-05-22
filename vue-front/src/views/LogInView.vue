@@ -1,28 +1,33 @@
 <template>
   <div class="container mt-5 d-flex flex-column align-items-center">
     <div class="text-center mb-4">
-      <h3 class="text-success">INTERESTing과 <br><span class="text-warning">'흥미로운'</span> 금융 생각</h3>
+      <h3 class="text-success">INTERESTing</h3>
     </div>
-    <div class="card w-100" style="max-width: 400px;">
-      <form @submit.prevent="logIn" class="p-4">
-        <div class="form-group mb-4">
-          <label for="username" class="visually-hidden">Username</label>
-          <div class="input-group">
-            <span class="input-group-text no-border-right"><i class="bi bi-person"></i></span>
-            <input type="text" class="form-control no-border-left" v-model.trim="username" id="username" placeholder="Username" required />
-          </div>
+    <div class="card w-100 custom-card" style="max-width: 400px;">
+      <div class="text-center mt-4 mb-3">
+        <h4>로그인</h4>
+      </div>
+      <form @submit.prevent="logIn" class="p-3">
+        <div class="form-group mb-3 position-relative">
+          <label for="username" class="visually-hidden">아이디</label>
+          <i class="bi bi-person input-icon"></i>
+          <input type="text" class="form-control underline" v-model.trim="username" id="username" placeholder="아이디" required />
         </div>
-        <div class="form-group mb-4">
-          <label for="password" class="visually-hidden">Password</label>
-          <div class="input-group">
-            <span class="input-group-text no-border-right"><i class="bi bi-lock"></i></span>
-            <input type="password" class="form-control no-border-left" v-model.trim="password" id="password" placeholder="Password" required />
-          </div>
+        <div class="form-group mb-3 position-relative">
+          <label for="password" class="visually-hidden">비밀번호</label>
+          <i class="bi bi-lock input-icon"></i>
+          <input type="password" class="form-control underline" v-model.trim="password" id="password" placeholder="비밀번호" required />
         </div>
-        <button type="submit" class="btn btn-success w-100 custom-btn">Log In</button>
+        <br>
+        <button type="submit" class="btn btn-custom w-100 custom-btn mb-2">LogIn</button>
+        <div class="d-flex justify-content-between">
+          <a href="#" class="link-custom">비밀번호 찾기</a>
+          <a href="#" class="link-custom">아이디 찾기</a>
+        </div>
       </form>
     </div>
   </div>
+  <br><br><br><br><br><br><br>
 </template>
 
 <script setup>
@@ -53,31 +58,84 @@ const logIn = () => {
   border-radius: 8px;
 }
 
-.input-group-text {
-  cursor: pointer;
-  border-right: 0;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  background-color: white;
+.custom-card {
+  min-height: 400px; /* 카드의 최소 높이를 줄입니다 */
+}
+
+h4 {
+  font-weight: bold;
+  margin-bottom: 1rem; /* 제목 아래 여백을 줄입니다 */
+}
+
+.form-group {
+  position: relative;
 }
 
 .form-control {
-  border-left: 0;
-  height: 50px;
+  height: 45px; /* 입력 필드의 높이를 줄입니다 */
+  padding-left: 2.5rem;
+  border: none;
+  border-bottom: 2px solid #ced4da;
+  border-radius: 0;
+  box-shadow: none;
 }
 
-.input-group-text.no-border-right {
-  border-right: 0;
-  background-color: white;
+.form-control::placeholder {
+  color: #6c757d;
 }
 
-.form-control.no-border-left {
-  border-left: 0;
+.form-control:focus {
+  outline: none;
+  border-bottom: 2px solid black;
+}
+
+.input-icon {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.25rem;
+  padding-left: 0.5rem;
+  color: #6c757d;
 }
 
 .custom-btn {
-  height: 45px;
+  height: 50px; /* 버튼 높이를 줄입니다 */
   font-size: 1.25rem;
+}
+
+input::placeholder {
+  color: #ced4da;
+  font-weight: 400;
+}
+
+button {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+button:hover {
+  background-color: #5a6268;
+  color: white;
+}
+
+button:active {
+  background-color: #A6BC09 !important;
+  color: white !important;
+}
+
+.link-custom {
+  color: #6c757d;
+  text-decoration: none;
+  font-size: 0.875rem;
+}
+
+.link-custom:hover {
+  text-decoration: underline;
+  color: #01415B;
 }
 </style>
