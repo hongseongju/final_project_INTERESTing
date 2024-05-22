@@ -134,6 +134,7 @@ color: #2c3e50;
 
 h5 {
   font-weight: bold;
+  color: #2c3e50;
 }
 
 ul {

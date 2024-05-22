@@ -29,7 +29,6 @@ db_list = [
     'deposit_depositproduct',
     'savings_optionlist',
     'deposit_optionlist',
-
     ]
 
 for db in db_list:

@@ -1,15 +1,14 @@
 <template>
   <div>
     <h2>적금 금리 RANKING</h2>
-    <div v-if="financialProducts.length > 0" class="product">
-      <div v-for="product in financialProducts" :key="product.fin_prdt_cd" >
-        <h5>{{ product.fin_prdt_nm }}</h5>
+    <hr>
+    <div v-if="financialProducts.length > 0">
+      <div v-for="product in sortedFinancialProducts" :key="product.fin_prdt_cd" >
         <div v-if="product.options && product.options.length > 0">
-          <ul  v-for="option in product.options" :key="option.id">
-            <!-- <li v-for="option in product.options" :key="option.id"></li>
-            <p>최소 {{ min_deposit(product.options) }}% ~ 최대 {{ max_deposit(product.options) }}%</p> -->
-          </ul>
-          <p>최소 {{ min_savings(product.options) }}% ~ 최대 {{ max_savings(product.options) }}%</p>
+          <div class="flex">
+            <p class="left-align">{{ product.fin_prdt_nm }}</p>
+            <p class="right-align">최소 {{ min_savings(product.options) }}% ~ 최대 {{ max_savings(product.options) }}%</p>
+          </div>
           <hr>
         </div>
       </div>
@@ -21,9 +20,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import axios from 'axios'
-import { useAuthStore } from '@/stores/counter'
 
 // 적금 데이터를 저장할 변수
 const savings = ref([])
@@ -57,8 +55,6 @@ onMounted(() => {
     })
 })
 
-const authStore = useAuthStore()
-
 // 최소 및 최대 금리 계산 함수
 const min_savings = (options) => {
   let minRate = Number.POSITIVE_INFINITY
@@ -78,7 +74,14 @@ const max_savings = (options) => {
   return maxRate
 }
 
-
+// 내림차순으로 정렬된 적금 상품
+const sortedFinancialProducts = computed(() => {
+  return financialProducts.value.slice().sort((a, b) => {
+    const maxRateA = max_savings(a.options)
+    const maxRateB = max_savings(b.options)
+    return maxRateB - maxRateA
+  })
+})
 </script>
 
 <style scoped>
@@ -89,9 +92,30 @@ const max_savings = (options) => {
   border-radius: 5px;
 }
 
+h2 {
+  font-weight: bold;
+  color: #A6BC09;
+}
+
 h3 {
   margin-top: 20px;
   color: #2c3e50;
+}
+
+.left-align {
+  text-align: left;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.right-align {
+  text-align: right;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 ul {
