@@ -18,6 +18,7 @@ class DepositOptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = DepositOption
         fields = '__all__'
+        read_only_fields = ['deposit_product']
 
 class DepositProductSerializer(serializers.ModelSerializer):
     options = DepositOptionSerializer(many=True, read_only=True)

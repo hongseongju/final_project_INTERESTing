@@ -13,6 +13,7 @@ BASE_URL = 'http://finlife.fss.or.kr/finlifeapi/'
 
 ACCOUNT_API_KEY = settings.ACCOUNT_API_KEY
 
+# 적금 정보 호출
 @api_view(['GET'])
 def saving_rate(request):
     URL = BASE_URL + 'savingProductsSearch.json'
@@ -82,7 +83,7 @@ def saving_rate(request):
 
     return Response(serializer.data)
 
-# 적금 추가
+# 예금 정보 호출
 @api_view(['GET'])
 def deposit_rate(request):
     URL = BASE_URL + 'depositProductsSearch.json'
@@ -95,9 +96,8 @@ def deposit_rate(request):
     products = response.get('result').get('baseList')
     
     for li in products:
-        fin_prdt_cd = li['fin_prdt_cd']
-        dcls_month = li['dcls_month']
         fin_co_no = li['fin_co_no']
+        fin_prdt_cd = li['fin_prdt_cd']
         kor_co_nm = li['kor_co_nm']
         fin_prdt_nm = li['fin_prdt_nm']
         join_way = li['join_way']
@@ -106,14 +106,10 @@ def deposit_rate(request):
         join_deny = li['join_deny']
         join_member = li['join_member']
         etc_note = li['etc_note']
-        max_limit = li['max_limit']
-        dcls_strt_day = li['dcls_strt_day']
-        dcls_end_day = li.get('dcls_end_day')  # 'dcls_end_day' 필드가 없을 수도 있으므로 .get() 메서드 사용
 
         save_data = {
-            'fin_prdt_cd': fin_prdt_cd,
-            'dcls_month': dcls_month,
             'fin_co_no': fin_co_no,
+            'fin_prdt_cd': fin_prdt_cd,
             'kor_co_nm': kor_co_nm,
             'fin_prdt_nm': fin_prdt_nm,
             'join_way': join_way,
@@ -122,17 +118,15 @@ def deposit_rate(request):
             'join_deny': join_deny,
             'join_member': join_member,
             'etc_note': etc_note,
-            'max_limit': max_limit,
-            'dcls_strt_day': dcls_strt_day,
-            'dcls_end_day': dcls_end_day
         }
-        if DepositProduct.objects.filter(fin_prdt_cd=fin_prdt_cd).exists():
+        if DepositProduct.objects.filter(fin_prdt_cd=li['fin_prdt_cd']).exists():
             continue
         product_serializer = DepositProductSerializer(data=save_data)
         if product_serializer.is_valid(raise_exception=True):
             product_serializer.save()
-    
+    # print('-----')
     options = response.get('result').get('optionList')
+    # print(options)
     for li in options:
         product = DepositProduct.objects.get(fin_prdt_cd=li['fin_prdt_cd'])
         if DepositOption.objects.filter(deposit_product=product, **li).exists():
