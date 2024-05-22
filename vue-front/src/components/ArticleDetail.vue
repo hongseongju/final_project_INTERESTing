@@ -4,8 +4,8 @@
     <p>작성자: {{ article.nickname }}</p>
     <p>{{ article.content }}</p>
     <p>작성일: {{ new Date(article.created_at).toLocaleString() }}</p>
-    <button @click="editArticle">글 수정</button>
-    <button @click="deleteArticle">글 삭제</button>
+    <button @click="editArticle" v-if="authStore.user.pk===article.user.pk">글 수정</button>
+    <button @click="deleteArticle" v-if="authStore.user.pk===article.user.pk">글 삭제</button>
 
     <div>
       <h3>댓글</h3>
@@ -24,8 +24,8 @@
             <p>작성자: {{ comment.nickname }}</p>
             <p>🌸{{ comment.content }}🌸</p>
             <p>작성일: {{ new Date(comment.created_at).toLocaleString() }}</p>
-            <button @click="editComment(comment)">댓글 수정</button>
-            <button @click="deleteComment(comment.id)">댓글 삭제</button>
+            <button @click="editComment(comment)" v-if="authStore.user.pk===article.user.pk">댓글 수정</button>
+            <button @click="deleteComment(comment.id)" v-if="authStore.user.pk===article.user.pk">댓글 삭제</button>
           </div>
           <hr>
         </li>
@@ -52,7 +52,10 @@ const authStore = useAuthStore();
 const fetchArticle = function () {
   return axios.get(`http://localhost:8000/articles/${route.params.id}/`)
     .then(response => {
+      console.log('API Response:', response.data);
       article.value = response.data;
+      console.log('Article Data:', article.value);
+      console.log('Comment Set:', article.value.comment_set);
       return response.data;
     })
     .catch(error => {
@@ -107,6 +110,7 @@ const deleteComment = function (commentId) {
 const editComment = function (comment) {
   editingComment.value = { ...comment };
   editingCommentContent.value = comment.content;
+  console.log('Editing Comment:', editingComment.value);
 };
 
 const cancelEditComment = function () {

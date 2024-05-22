@@ -78,17 +78,35 @@ export const useAuthStore = defineStore('auth', () => {
       new_password2: newPassword
     })
     .then(() => {
-      // 필요한 추가 작업
+      console.log('비밀번호 변경 성공!');
     })
     .catch(error => {
-      console.error(error);
+      console.error('비밀번호 변경 실패:', error.response ? error.response.data : error.message);
     });
   };
+
+  const changeNickname = (newNickname) => {
+    return axios.put(`${API_URL}accounts/change-nickname/`, {
+      nickname: newNickname
+    }, {
+      headers: {
+        Authorization: `Token ${token.value}`
+      }
+    })
+    .then(() => {
+      console.log('닉네임 변경 성공!');
+      fetchUserDetails();  // 변경된 닉네임을 즉시 반영하기 위해 사용자 정보를 다시 가져옵니다.
+    })
+    .catch(error => {
+      console.error('닉네임 변경 실패:', error.response ? error.response.data : error.message);
+    });
+  };
+  
 
   const resetPassword = (email) => {
     return axios.post(`${API_URL}dj-rest-auth/password/reset/`, { email })
     .then(() => {
-      // 필요한 추가 작업
+      console.log('비밀번호 초기화 이메일 전송 성공!');
     })
     .catch(error => {
       console.error(error);
@@ -100,7 +118,7 @@ export const useAuthStore = defineStore('auth', () => {
       uid, token, new_password1: newPassword, new_password2: newPassword
     })
     .then(() => {
-      // 필요한 추가 작업
+      console.log('비밀번호 초기화 성공!');
     })
     .catch(error => {
       console.error(error);
@@ -225,6 +243,7 @@ export const useAuthStore = defineStore('auth', () => {
     logout, 
     fetchUserDetails, 
     changePassword, 
+    changeNickname, 
     resetPassword, 
     resetPasswordConfirm, 
     fetchArticles, 
