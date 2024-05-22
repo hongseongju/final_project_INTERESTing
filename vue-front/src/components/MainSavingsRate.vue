@@ -1,6 +1,6 @@
 <template>
     <div class="m-5">
-      <h2 class="mb-2">예금 명예의 전당👑</h2>
+      <h2 class="mb-2">적금 명예의 전당👑</h2>
       <div v-if="topFinancialProducts.length > 0">
         <div>
           <h5>오늘 "{{ topFinancialProduct.fin_prdt_nm }}" 가입하면 이자가 {{ topFinancialProductInterest }}원! (세전, 백만원 기준)</h5>
@@ -15,7 +15,7 @@
                 <p class="card-text">금리 {{ min_deposit(product.options) }}% ~ {{ max_deposit(product.options) }}%</p>
             </div>
               </div>
-              </RouterLink>
+            </RouterLink>
             </li>
           </ul>
         </div>
@@ -36,9 +36,9 @@
   
   // 예금 데이터를 가져오는 함수
   const fetchDeposits = () => {
-    axios.get('http://127.0.0.1:8000/api_deposit/')
+    axios.get('http://127.0.0.1:8000/api_savings/')
       .then(response => {
-        console.log('예금 데이터 조회 완료')
+        console.log('적금 데이터 조회 완료')
         deposits.value = response.data
       })
       .catch(error => {
@@ -50,11 +50,11 @@
     fetchDeposits()
   })
   
-  // 예금 상세 정보 출력
+  // 적금 상세 정보 출력
   const financialProducts = ref([])
   
   onMounted(() => {
-    axios.get('http://127.0.0.1:8000/api_deposit/deposit_detail/')
+    axios.get('http://127.0.0.1:8000/api_savings/savings_detail')
       .then(response => {
         financialProducts.value = response.data
       })
@@ -134,7 +134,6 @@ color: #2c3e50;
 
 h5 {
   font-weight: bold;
-  color: #2c3e50;
 }
 
 ul {
@@ -185,5 +184,4 @@ transform: perspective(1500px) rotateY(0deg);
 box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
 cursor: pointer;
 }
-
 </style>

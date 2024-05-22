@@ -115,7 +115,7 @@ def chat_bot(request):
             presence_penalty=0.5
         )
         output_message = response.choices[0].message.content
-        print(output_message)
+        # print(output_message)
         chat_history.append({"role": "assistant", "content": f"{output_message}"})
         return Response(output_message,status=status.HTTP_200_OK)
     except Exception as e:
