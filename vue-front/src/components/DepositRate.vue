@@ -31,7 +31,7 @@ const deposits = ref([])
 
 // 예금 데이터를 가져오는 함수
 const fetchDeposits = () => {
-  axios.get('http://127.0.0.1:8000/api_savings/deposit/') 
+  axios.get('http://127.0.0.1:8000/api_deposit/') 
     .then(response => {
       console.log('예금 데이터 조회 완료')
       deposits.value = response.data
@@ -49,7 +49,7 @@ onMounted(() => {
 const financialProducts = ref([])
   
   onMounted(() => {
-    axios.get('http://127.0.0.1:8000/api_savings/deposit_detail/')
+    axios.get('http://127.0.0.1:8000/api_deposit/deposit_detail/')
       .then(response => {
         financialProducts.value = response.data
       })

@@ -3,7 +3,7 @@
     <div class="text-container">
       <h4>각티슈 뽑듯 간편하게</h4>
       <h1>INTERESTing(´▽`ʃ♡ƪ)</h1>
-      <!-- <ChatBot/> -->
+      <ChatBot2 />
     </div>
   </main>
   <article>
@@ -47,7 +47,7 @@
 
 
 <script setup>
-import ChatBot from '../components/ChatBot.vue'
+import ChatBot2 from '../components/ChatBot2.vue'
 </script>
 
 <style scoped>

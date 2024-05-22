@@ -4,21 +4,20 @@ from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.http import JsonResponse
-from .models import FinancialProduct, OptionList
-from .serializers import SavingsProductsSerializer, SavingsOptionsSerializer
-
+from .models import DepositProduct, OptionList
+from .serializers import DepositProductSerializer, DepositOptionSerializer
 # Create your views here.
 BASE_URL = 'http://finlife.fss.or.kr/finlifeapi/'
 
 ACCOUNT_API_KEY = settings.ACCOUNT_API_KEY
 
-# 적금 정보 호출
+# 예금 정보 호출
 @api_view(['GET'])
-def saving_rate(request):
-    URL = BASE_URL + 'savingProductsSearch.json'
+def deposit_rate(request):
+    URL = BASE_URL + 'depositProductsSearch.json'
     params = {
         'auth': ACCOUNT_API_KEY,
-        'topFinGrpNo': '020000',    #은행코드: 020000
+        'topFinGrpNo': '020000',    # 은행코드: 020000
         'pageNo': '1'
     }
     response = requests.get(URL, params=params).json()
@@ -32,7 +31,8 @@ def saving_rate(request):
         join_way = li['join_way']
         mtrt_int = li['mtrt_int']
         spcl_cnd = li['spcl_cnd']
-        join_member =li['join_member']
+        join_deny = li['join_deny']
+        join_member = li['join_member']
         etc_note = li['etc_note']
 
         save_data = {
@@ -43,47 +43,35 @@ def saving_rate(request):
             'join_way': join_way,
             'mtrt_int': mtrt_int,
             'spcl_cnd': spcl_cnd,
+            'join_deny': join_deny,
             'join_member': join_member,
-            'etc_note': etc_note
+            'etc_note': etc_note,
         }
-        # 겹치는 필드
-        if FinancialProduct.objects.filter(fin_prdt_cd=li['fin_prdt_cd']).exists():
+        if DepositProduct.objects.filter(fin_prdt_cd=li['fin_prdt_cd']).exists():
             continue
-        product_serializer = SavingsProductsSerializer(data=save_data)
-        # 유효성 검증
+        product_serializer = DepositProductSerializer(data=save_data)
         if product_serializer.is_valid(raise_exception=True):
-            # 유효하다면 저장
-            product = product_serializer.save()
-            
-    # 옵션 데이터 처리 
+            product_serializer.save()
+    # print('-----')
     options = response.get('result').get('optionList')
+    # print(options)
     for li in options:
-        product = FinancialProduct.objects.get(fin_prdt_cd=li['fin_prdt_cd'])
-        if OptionList.objects.filter(financial_product=product,
-                                        fin_prdt_cd = li['fin_prdt_cd'],
-                                        intr_rate_type = li['intr_rate_type'],
-                                        intr_rate_type_nm = li['intr_rate_type_nm'],
-                                        rsrv_type = li['rsrv_type'],
-                                        rsrv_type_nm = li['rsrv_type_nm'],
-                                        save_trm = li['save_trm'],
-                                        intr_rate = li['intr_rate'],
-                                        intr_rate2 = li['intr_rate2'],
-                                        ).exists():
+        product = DepositProduct.objects.get(fin_prdt_cd=li['fin_prdt_cd'])
+        if OptionList.objects.filter(deposit_product=product, **li).exists():
             continue
-        option_serializer = SavingsOptionsSerializer(data=li)
-        # 유효성 검증
+        option_serializer = DepositOptionSerializer(data=li)
         if option_serializer.is_valid(raise_exception=True):
-            # 유효하다면 저장
-            option_serializer.save(financial_product=product)
+            option_serializer.save(deposit_product=product)
     
-    rate = FinancialProduct.objects.all()
-    serializer = SavingsProductsSerializer(rate, many=True)
+    rate = DepositProduct.objects.all()
+    serializer = DepositProductSerializer(rate, many=True)
+
     return Response(serializer.data)
 
 
-# 적금 상세
-def savings_detail(request):
-    products = FinancialProduct.objects.all()
+# 예금 상세
+def deposit_detail(request):
+    products = DepositProduct.objects.all()
     response_data = []
     for product in products:
         options = product.options.all()
@@ -100,3 +88,4 @@ def savings_detail(request):
         }
         response_data.append(product_data)
     return JsonResponse(response_data, safe=False)
+

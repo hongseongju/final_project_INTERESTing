@@ -34,8 +34,10 @@ INSTALLED_APPS = [
     'accounts',
     'articles',
     'savings',
+    'deposit',
     'exchange_rate',
     'stock_list',
+    'chat_bot',
     'django.contrib.sites',  # allauth가 필요로 하는 앱
     'allauth',
     'allauth.account',
@@ -91,8 +93,19 @@ WSGI_APPLICATION = 'interesting_back.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+# env 연결
+import os
+from pathlib import Path
+from dotenv import load_dotenv
 
-MYSQL_PASSWORD = 'interesting!'
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# .env 파일 로드
+load_dotenv(os.path.join(BASE_DIR, '.env'))
+
+
+MYSQL_PASSWORD = os.getenv('MYSQL_PASSWORD')
+
 
 # !! data base 변경
 DATABASES = {
@@ -176,18 +189,12 @@ ACCOUNT_ADAPTER = 'accounts.models.CustomAccountAdapter'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 
-# env 연결
-import os
-from pathlib import Path
-from dotenv import load_dotenv
-
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-# .env 파일 로드
-load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 # 예적금 API 키
 ACCOUNT_API_KEY = os.getenv('ACCOUNT_API_KEY')
 
 # 환율 API 키
 EXCHANGE_API_KEY = os.getenv('EXCHANGE_API_KEY')
+
+# 챗GPT OPENAI API 키
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
