@@ -3,8 +3,6 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from .models import CustomUser
 
-
-
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def charge_cash(request):
@@ -22,4 +20,15 @@ def charge_cash(request):
 
     return Response({'message': 'Cash charged successfully', 'amount': amount})
 
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def change_nickname(request):
+    new_nickname = request.data.get('nickname')
+    if not new_nickname:
+        return Response({"error": "Nickname is required"}, status=400)
 
+    user = request.user
+    user.nickname = new_nickname
+    user.save()
+
+    return Response({"success": "Nickname changed successfully"}, status=200)
