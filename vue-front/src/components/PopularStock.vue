@@ -59,7 +59,7 @@ position: relative;
 font-size: 1.5rem;
 font-weight: bold;
 color: white;
-text-align: center;
+text-align: left;
 border-radius: 10px;
 padding: 1rem;
 height: 150px;
@@ -69,7 +69,7 @@ transition: 0.2s ease-in-out;
 }
 
 .main-bar:hover {
-transform: perspective(1500px) rotateY(30deg);
+transform: perspective(1500px) rotateY(20deg);
 box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.6);
 cursor: pointer;
 }

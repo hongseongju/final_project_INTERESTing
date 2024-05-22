@@ -1,7 +1,6 @@
 <template>
     <div>
-        <ChatBot />
-        하이용        
+        <ChatBot />     
     </div>
 </template>
 

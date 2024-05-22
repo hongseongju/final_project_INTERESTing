@@ -57,7 +57,7 @@ body {
     background-color: #e6e6e6;
 }
 #chat-container {
-    width: 400px;
+    width: 1000px;
     height: 600px;
     display: flex;
     flex-direction: column;

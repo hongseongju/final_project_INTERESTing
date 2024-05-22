@@ -78,7 +78,7 @@ def chat_bot(request):
     
     if '은행' in input_message and '추천' in input_message:
         # print(product_info)
-        print(deposit_info)
+        # print(deposit_info)
         chat_history.append(
             {"role": "system", "content": f"만약 은행을 추천한다면 {product_info}에 기반해서 kor_co_nm와 fin_prdt_nm를 3개 추천해줘."}
         )
