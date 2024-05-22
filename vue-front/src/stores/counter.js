@@ -61,7 +61,9 @@ export const useAuthStore = defineStore('auth', () => {
     });
   };
 
+
   const fetchUserDetails = () => {
+    setAuthHeaders()
     return axios.get(`${API_URL}accounts/user/`)
     .then(response => {
       user.value = response.data;

@@ -1,25 +1,28 @@
 <template>
   <div class="container">
     <div class="mt-4">
-      <h1>적금 한눈에 보기</h1>
+      <h1>금융 상품 정보</h1>
     </div>
     <div class="m-3">
       <input type="text" v-model="searchQuery" placeholder="상품이름 또는 은행명을 검색하세요" class="search-input">
     </div>
-    <div v-if="financialProducts.length > 0">
-      <div v-for="product in financialProducts" :key="product.fin_prdt_cd" class="product shadow">
+    <div v-if="filteredProducts.length > 0">
+      <div v-for="product in filteredProducts" :key="product.fin_prdt_cd" class="product shadow">
         <h2 class="m-3">{{ product.fin_prdt_nm }} [{{ product.kor_co_nm }}]</h2>
         <p>상품 코드: {{ product.fin_prdt_cd }}</p>
         <p>가입 방법: {{ product.join_way }}</p>
         <p>특별 조건: {{ product.spcl_cnd }}</p>
         <p>기타: {{ product.etc_note }}</p>
         <div v-if="product.options && product.options.length > 0">
+          <h3>옵션 리스트</h3>
           <ul>
-            <div v-for="option in product.options" :key="option.id" class="content">
-              <p>유형: {{ option.save_trm }}개월 ({{ option.intr_rate_type_nm }})</p>
-              <p>기본 금리: {{ option.intr_rate }}%</p>
+            <li v-for="option in product.options" :key="option.id" class="content">
+              <p>이자 유형: {{ option.intr_rate_type_nm }}</p>
+              <p>저축 기간: {{ option.save_trm }}개월</p>
+              <p>금리: {{ option.intr_rate }}%</p>
               <p>최대 금리: {{ option.intr_rate2 }}%</p>
-            </div>
+              <button @click="subscribeToOption(option.id, 'savings')">가입하기</button>
+            </li>
           </ul>
         </div>
       </div>
@@ -44,11 +47,30 @@ onMounted(() => {
       financialProducts.value = response.data
     })
     .catch(error => {
-      console.error('Failed to fetch savings detail:', error)
+      console.error('Failed to fetch savings details:', error)
     })
 })
 
 const authStore = useAuthStore()
+
+const subscribeToOption = (optionId, type) => {
+  if (!authStore.user) {
+    alert('로그인이 필요합니다.');
+    return;
+  }
+
+  const userId = authStore.user.id || authStore.user.pk;
+  const url = type === 'savings' ? 'http://127.0.0.1:8000/accounts/subscribe_savings/' : 'http://127.0.0.1:8000/accounts/subscribe_deposit/';
+  axios.post(url, { option_id: optionId, user_id: userId })
+    .then(response => {
+      alert('가입이 완료되었습니다.');
+    })
+    .catch(error => {
+      console.error('Failed to subscribe:', error)
+      console.log(userId)
+      alert('가입이 거절되었습니다');
+    })
+}
 
 const filteredProducts = computed(() => {
   return financialProducts.value.filter(product => {
@@ -100,5 +122,9 @@ div > h2 {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
+}
+
+.shadow {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 </style>
