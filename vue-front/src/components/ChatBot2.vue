@@ -21,7 +21,7 @@ const messages = ref([])
 const userMessage = ref('')
 
 const sendMessage = function(){
-    messages.value.push({sender: 'user', content: userMessage.value})
+    messages.value.push({sender: '나', content: userMessage.value})
     axios({
         url: FIN_URL,
         method:'get',
@@ -36,6 +36,7 @@ const sendMessage = function(){
     })
     .catch(error => {
         console.log(error)
+        messages.value.push({sender:'챗봇', content: '통신 오류입니다.'})
     })
     userMessage.value = null
 }

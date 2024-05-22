@@ -12,8 +12,8 @@ from openai import OpenAI
 # Create your views here.
 # DB 데이터를 읽어와서 ai한테 줄 리스트로 만들기
 product_info = []
+savings_info = []
 deposit_info = []
-all_info = []
 # with open('파일경로', 'r', encoding='utf-8') as f :
 #     text = f.read()
 
@@ -25,30 +25,33 @@ conn = pymysql.connect(
 )
 cursor = conn.cursor()
 db_list = [
-    # 'savings_depositproduct',
-    # 'savings_financialproduct',
-    # 'savings_depositoption',
-    # 'savings_optionlist',
+    'savings_financialproduct',
+    'deposit_depositproduct',
+    'savings_optionlist',
+    'deposit_optionlist',
+
     ]
 
 for db in db_list:
     # 상품 정보 등록
     if 'product' in db:
-        cursor.execute(f"SELECT fin_prdt_cd, fin_co_no, kor_co_nm, fin_prdt_nm FROM {db}")
+        cursor.execute(f"SELECT fin_prdt_cd, fin_co_no, kor_co_nm, fin_prdt_nm, spcl_cnd FROM {db}")
     # 옵션 정보 등록
-    else :
+    if db == 'savings_optionlist':
         cursor.execute(f'SELECT fin_prdt_cd, rsrv_type_nm, save_trm, intr_rate, intr_rate2  FROM {db}')
-        
+    elif db == 'deposit_optionlist':
+        cursor.execute(f'SELECT deposit_product_id, rsrv_type_nm, save_trm, intr_rate, intr_rate2  FROM {db}')
+    
     rows = cursor.fetchall()
     columns = [description[0] for description in cursor.description]
     df = pd.DataFrame(rows, columns=columns)
     json_data = df.to_json(orient='records', force_ascii=False)
     if 'product' in db:
         product_info.extend(json.loads(json_data))
-    elif 'deposit' in db:
+    elif 'savings' in db:
         deposit_info.extend(json.loads(json_data))
-    else:
-        all_info.extend(json.loads(json_data))
+    elif 'deposit' in db:
+        savings_info.extend(json.loads(json_data))
 
 conn.close()
 
@@ -69,22 +72,36 @@ def chat_bot(request):
     chat_history.extend(
         [
             {"role": "user", "content": f"{input_message}"},
-            {"role": "system", "content": f"반드시 한글로 대답해줘."}
+            {"role": "system", "content": f"반드시 한글로 대답해줘. 너는 금리비교 사이트인 INTERESTing의 챗봇으로 사람들에게 추천 예적금을 알려줘야 해."}
         ] 
     )
     
     if '은행' in input_message and '추천' in input_message:
-        print(product_info[0]['kor_co_nm'])
+        # print(product_info)
+        print(deposit_info)
         chat_history.append(
-            {"role": "system", "content": f"만약 은행을 추천한다면 {product_info} 정보에 기반해서 한글로 2개 정도 추천해줘. 그리고 {all_info}에서 fin_prdt_cd가 동일한 정보의 최저금리: intr_rate 와 최고금리: intr_rate2를 알려줘."}
+            {"role": "system", "content": f"만약 은행을 추천한다면 {product_info}에 기반해서 kor_co_nm와 fin_prdt_nm를 3개 추천해줘."}
+        )
+    elif '은행' in input_message:
+        chat_history.append(
+            {"role": "system", "content": f"만약 은행에 대해 물어보면 {product_info}의 kor_co_nm 정보에 기반해서 5개 정도 알려줘."}
         )
     if '예금' in input_message and '추천' in input_message:
         chat_history.append(
-            {"role": "system", "content": f"만약 예금 상품을 추천한다면 아래 정보에 기반해서 예금 상품의 이름과 함께 정보를 한글로 답변해줘. {deposit_info} 예금 상품의 이름은 각 딕셔너리 내의 'fin_prdt_nm'의 값이야." }
+            {"role": "system", "content": f"만약 예금 상품을 추천한다면 {input_message}와 {product_info}의 spcl_cnd 정보에 기반해서 예금 상품을 3개 정도 추천해줘. 적금은 추천해주면 안돼"}
         )
     if '적금' in input_message and '추천' in input_message:
         chat_history.append(
-            {"role": "system", "content": f"만약 적금 상품을 추천한다면 아래 정보에 기반해서 적금 상품의 이름과 함께 정보를 한글로 답변해줘. {all_info} 적금 상품의 이름은 각 딕셔너리 내의 'fin_prdt_nm'의 값이야."}
+            {"role": "system", "content": f"만약 적금 상품을 추천한다면 {input_message}와 {product_info}의 spcl_cnd 정보에 기반해서 적금 상품을 3개 정도 추천해줘. 예금은 추천해주면 안돼" }
+        )
+        
+    if '금리' in input_message:
+        chat_history.append(
+            {"role": "system", "content": f"만약 금리를 물어봤는데 금융상품인 fin_prdt_nm를 선택 안했다면 어떤 상품으로 조회할지 먼저 물어봐 줘. fin_prdt_nm를 선택했다면 {deposit_info}에 기반해서 물어본 savings_info의 최저금리 intr_rate와 최고금리 intr_rate2를 알려줘."}
+        )
+    if '결혼' in input_message:
+        chat_history.append(
+    {"role": "system", "content": f"만약 결혼에 대해 물어보면 {product_info}의 spcl_cnd 정보에 기반해서 상품을 2개 정도 추천해줘."}
         )
     print('중간지점')
     try:
