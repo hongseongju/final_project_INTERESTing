@@ -1,8 +1,8 @@
 <template>
   <header>
-    <div>
-    <h1 class="m-4">주변 은행 검색</h1>
-    <div class="m-2">
+    <div class="m-4">
+    <h1>주변 은행 검색</h1>
+    <div class="m-4">
         <select v-model="result" id="keyword" class="custom-border">
           <option value="" selected disabled>은행 선택</option>
           <option v-for="(bank, index) in banks" :key="index" :value="bank">
