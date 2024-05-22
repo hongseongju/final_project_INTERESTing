@@ -4,7 +4,7 @@
     <p>작성자: {{ article.nickname }}</p>
     <p>{{ article.content }}</p>
     <p>작성일: {{ new Date(article.created_at).toLocaleString() }}</p>
-    <pre>{{ authStore.user }}</pre> <!-- 사용자 정보를 출력하여 확인 -->
+    <!-- <pre>{{ authStore.user }}</pre>  -->
 
     <button @click="editArticle" v-if="authStore.user && authStore.user.pk === article.user.pk">글 수정</button>
     <button @click="deleteArticle" v-if="authStore.user && authStore.user.pk === article.user.pk">글 삭제</button>
