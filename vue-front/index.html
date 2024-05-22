@@ -5,9 +5,59 @@
     <link rel="icon" href="/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vite App</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Gothic+A1&display=swap');
+
+      body {
+        font-family: "Gothic A1", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        margin: 0;
+      }
+
+      #app {
+        flex: 1;
+      }
+
+      .footer {
+        background-color: #333;
+        color: whitesmoke;
+        text-align: center;
+        padding: 20px 0; 
+      }
+
+      .nav-link {
+        color: whitesmoke;
+        text-decoration: none;
+      }
+
+      .nav-link:hover {
+        text-decoration: underline;
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
+    />
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <!-- 메인 콘텐츠 -->
+    </div>
+    <footer class="footer">
+      <p style="font-size: 15px;">
+        © 2024 INTERESTing 구고운 홍성주<br>
+        in Samsung Software Academy For Youth
+      </p>
+      <p>
+        <a class="nav-link" href="https://github.com/hongseongju/final_project_INTERESTing">
+          <i class="bi bi-github"></i>
+        </a>
+      </p>
+    </footer>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
