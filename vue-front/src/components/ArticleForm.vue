@@ -1,6 +1,6 @@
 <template>
   <div class="container mt-5">
-    <h1 class="text-center mb-4">카페 글쓰기</h1>
+    <h1 class="text-center mb-4"></h1>
     <form @submit.prevent="submitArticle" class="border p-4 rounded mx-auto form-width">
       <div class="mb-3">
         <label for="title" class="form-label">제목</label>
@@ -10,7 +10,7 @@
         <label for="content" class="form-label">내용</label>
         <textarea id="content" class="form-control content-box" v-model="content" rows="15" placeholder="내용을 입력해 주세요."></textarea>
       </div>
-      <button type="submit" class="btn btn-primary">등록</button>
+      <button class="write-button" type="submit"> &nbsp;등록 &nbsp;</button>
     </form>
   </div>
 </template>
@@ -111,5 +111,21 @@ h1 {
 
 .form-width {
   width: 70%;
+}
+
+.write-button {
+  background-color: #f0f0f0;
+  color: #666;
+  border: 1px solid #ddd;
+  border-radius: 4%;
+  padding: 5px 10px;
+  cursor: pointer;
+  text-align: justify;
+  margin-left: auto;
+ 
+}
+
+.write-button:hover {
+  background-color: #e0e0e0;
 }
 </style>

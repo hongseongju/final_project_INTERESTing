@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>&nbsp;종목토론방 &nbsp;</h1>
+    <h1>&nbsp;주식톡톡 &nbsp;</h1>
     <ul class="article-list">
       <li class="article-item" v-for="article in paginatedArticles" :key="article.id">
         <span class="article-run">{{ article.id }}</span>
@@ -20,8 +20,8 @@
           {{ page }}
         </span>
       </div>
-      <button class="write-button" @click="checkLoginAndRedirect">글쓰기</button>
     </div>
+    <button class="write-button" @click="checkLoginAndRedirect">&nbsp;write&nbsp;</button>
   </div>
 </template>
 
@@ -157,10 +157,14 @@ h1 {
 
 .write-button {
   background-color: #f0f0f0;
-  color: black;
+  color: #666;
   border: 1px solid #ddd;
+  border-radius: 4%;
   padding: 5px 10px;
   cursor: pointer;
+  text-align: justify;
+  margin-left: auto;
+ 
 }
 
 .write-button:hover {
