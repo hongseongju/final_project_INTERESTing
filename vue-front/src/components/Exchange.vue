@@ -111,7 +111,7 @@ h4 {
 .card {
   width: 18rem;
   border: 1px solid #e2e2e2;
-  border-radius: 5px;
+  border-radius: 3px;
   overflow: hidden;
 }
 
