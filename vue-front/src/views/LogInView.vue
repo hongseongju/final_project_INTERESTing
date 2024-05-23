@@ -1,7 +1,7 @@
 <template>
   <div class="container mt-5 d-flex flex-column align-items-center">
     <div class="text-center mb-4">
-      <h3 class="text-success">INTERESTing</h3>
+      <img src="../assets/interesting_logo.png" alt="" class="logo-img">
     </div>
     <div class="card w-100 custom-card" style="max-width: 400px;">
       <div class="text-center mt-4 mb-3">
@@ -137,5 +137,9 @@ button:active {
 .link-custom:hover {
   text-decoration: underline;
   color: #01415B;
+}
+
+.logo-img {
+  width: 70%;
 }
 </style>

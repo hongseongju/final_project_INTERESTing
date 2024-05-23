@@ -25,7 +25,7 @@
       <ul class="comments-list">
         <li v-for="comment in article.comment_set" :key="comment.id" class="comment-item">
           <div v-if="editingComment && editingComment.id === comment.id" class="comment-edit">
-            <textarea v-model="editingCommentContent"></textarea>
+            <textarea v-model="editingCommentContent" class="comment-edit-textarea"></textarea>
             <button @click="updateComment">수정 완료</button>
             <button @click="cancelEditComment">취소</button>
           </div>
@@ -34,14 +34,14 @@
             <p class="comment-text">{{ comment.content }}</p>
             <p class="comment-date">작성일: {{ new Date(comment.created_at).toLocaleString() }}</p>
             <div class="comment-actions" v-if="authStore.user && authStore.user.pk === comment.user.pk">
-<button @click="toggleMenu(comment.id)" class="icon-button"><i class="bi bi-three-dots-vertical custom-icon"></i></button>
-
-  <div :class="{'dropdown-menu': true, 'active': activeCommentId === comment.id}">
-    <button @click="editComment(comment)">수정</button>
-    <button @click="deleteComment(comment.id)">삭제</button>
-  </div>
-</div>
-
+              <button @click="toggleMenu(comment.id)" class="icon-button">
+                <i class="bi bi-three-dots-vertical custom-icon"></i>
+              </button>
+              <div :class="{'dropdown-menu': true, 'active': activeCommentId === comment.id}">
+                <button @click="editComment(comment)">수정</button>
+                <button @click="deleteComment(comment.id)">삭제</button>
+              </div>
+            </div>
           </div>
         </li>
       </ul>
@@ -208,7 +208,6 @@ onMounted(() => {
 .article-header {
   padding-bottom: 10px;
   margin-bottom: 20px;
-
 }
 
 .article-header h1 {
@@ -223,10 +222,10 @@ onMounted(() => {
   font-size: 14px;
   color: #555;
 }
+
 .article-meta1 {
   display: flex;
   flex-direction: column;
-  
   font-size: 14px;
   color: #555;
 }
@@ -252,7 +251,6 @@ onMounted(() => {
 .article-actions button:hover {
   background-color: #f0f0f0;
 }
-
 
 .comments-section {
   margin-top: 20px;
@@ -304,7 +302,7 @@ onMounted(() => {
 }
 
 .comment-author {
-  font-weight:lighter;
+  font-weight: lighter;
   margin: auto;
   padding: 1%;
   color: #888;
@@ -345,7 +343,6 @@ onMounted(() => {
   display: block; /* active 클래스가 추가되면 표시 */
 }
 
-
 .comment-actions .dropdown-menu button {
   display: block;
   width: 100%;
@@ -357,6 +354,32 @@ onMounted(() => {
 }
 
 .comment-actions .dropdown-menu button:hover {
+  background-color: #f0f0f0;
+}
+
+.comment-edit {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.comment-edit-textarea {
+  width: 100%;
+  height: 80px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+}
+
+.comment-edit button {
+  align-self: flex-end;
+  padding: 5px 10px;
+  border: 1px solid #ddd;
+  background-color: #f9f9f9;
+  cursor: pointer;
+}
+
+.comment-edit button:hover {
   background-color: #f0f0f0;
 }
 
@@ -380,5 +403,4 @@ onMounted(() => {
 .custom-icon {
   color: #888; /* 원하는 색상으로 변경 */
 }
-
 </style>

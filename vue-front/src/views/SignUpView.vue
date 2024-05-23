@@ -1,7 +1,7 @@
 <template>
   <div class="container mt-5 d-flex flex-column align-items-center">
     <div class="text-center mb-4">
-      <h3 class="text-success">INTERESTing</h3>
+      <img src="../assets/interesting_logo.png" alt="" class="logo-img">
     </div>
     <div class="card w-100" style="max-width: 400px;">
       <div class="text-center mt-4 mb-4">
@@ -151,5 +151,9 @@ button:hover {
 button:active {
   background-color: #A6BC09 !important;
   color: white !important;
+}
+
+.logo-img {
+  width: 70%;
 }
 </style>

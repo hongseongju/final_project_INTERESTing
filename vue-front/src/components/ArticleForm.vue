@@ -1,15 +1,18 @@
 <template>
-  <form @submit.prevent="submitArticle">
-    <div>
-      <label for="title">Title</label>
-      <input type="text" id="title" v-model="title" />
-    </div>
-    <div>
-      <label for="content">Content</label>
-      <textarea id="content" v-model="content"></textarea>
-    </div>
-    <button type="submit">Submit</button>
-  </form>
+  <div class="container mt-5">
+    <h1 class="text-center mb-4"></h1>
+    <form @submit.prevent="submitArticle" class="border p-4 rounded mx-auto form-width">
+      <div class="mb-3">
+        <label for="title" class="form-label">제목</label>
+        <input type="text" id="title" class="form-control" v-model="title" placeholder="제목을 입력해 주세요." />
+      </div>
+      <div class="mb-3">
+        <label for="content" class="form-label">내용</label>
+        <textarea id="content" class="form-control content-box" v-model="content" rows="15" placeholder="내용을 입력해 주세요."></textarea>
+      </div>
+      <button class="write-button" type="submit"> &nbsp;등록 &nbsp;</button>
+    </form>
+  </div>
 </template>
 
 <script>
@@ -77,5 +80,52 @@ export default {
 </script>
 
 <style scoped>
-/* 추가적인 스타일 정의 가능 */
+.container {
+  max-width: 1000px;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+.form-label {
+  font-weight: bold;
+}
+
+.form-control {
+  height: calc(2.5em + 0.75rem + 2px);
+  font-size: 1rem;
+  padding: 0.375rem 0.75rem;
+}
+
+.content-box {
+  height: auto;
+  font-size: 1rem;
+  padding: 0.75rem;
+}
+
+.btn {
+  font-size: 1rem;
+  padding: 0.5rem 1.5rem;
+}
+
+.form-width {
+  width: 70%;
+}
+
+.write-button {
+  background-color: #f0f0f0;
+  color: #666;
+  border: 1px solid #ddd;
+  border-radius: 4%;
+  padding: 5px 10px;
+  cursor: pointer;
+  text-align: justify;
+  margin-left: auto;
+ 
+}
+
+.write-button:hover {
+  background-color: #e0e0e0;
+}
 </style>
