@@ -1,13 +1,13 @@
 <template>
   <div>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
-      <div class="container-fluid">
+      <div class="container-fluid justify-content-center">
         <RouterLink class="navbar-brand font-weight-bold nav-link" to="/">INTERESTing</RouterLink>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
             <li class="nav-item">
               <RouterLink class="nav-link" to="/interest_rate">예적금 비교</RouterLink>
             </li>
@@ -26,7 +26,6 @@
             <li class="nav-item">
               <RouterLink class="nav-link" to="/articles">커뮤니티</RouterLink>
             </li>
-
           </ul>
           <ul class="navbar-nav">
             <li v-if="isLogin" class="nav-item">
@@ -46,7 +45,6 @@
       </div>
     </nav>
     <RouterView />
-
   </div>
 </template>
 
@@ -68,26 +66,47 @@ const logout = () => {
   --bs-tertiary-bg-rgb: white; /* 원하는 RGB 값으로 변경 */
   background-color: rgb(var(--bs-tertiary-bg-rgb)) !important;
 }
+
 .navbar-nav .nav-link {
-  color: #005148 !important; /* 텍스트 색상 변경 */
+  color: #01415B; /* 텍스트 색상 변경 */
   font-weight: bold;
+  position: relative;
+  padding-bottom: 5px; /* 하단 패딩 추가 */
+  transition: color 0.3s ease;
+  text-decoration: none; /* 링크 밑줄 제거 */
 }
-.navbar-nav .nav-link:hover {
-  color: #CCEA8D !important; /* 링크 호버 색상 변경 */
+
+.navbar-nav .nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 3px; /* 네모바의 높이 */
+  background-color: #01415B; /* 네모바의 색상 */
+  transition: width 0.3s ease;
 }
+
+.navbar-nav .nav-link:hover::after {
+  width: 100%; /* 호버 시 네모바의 너비 */
+}
+
 .navbar-toggler {
   border-color: #fff !important; /* 토글 버튼 테두리 색상 변경 */
 }
+
 .font-weight-bold {
   font-weight: bold;
-  color: #fff !important; /* 텍스트 색상 변경 */
+  color: #01415B;
 }
 
-.sticky {
-  position:sticky; 
-  top:10px; left:10px; 
-  width:100px; height:100px; 
-  background:red;
-  z-index: 9999;
+.navbar-collapse {
+  display: flex;
+  justify-content: center; /* 중앙 정렬 */
+}
+
+.navbar-nav {
+  display: flex;
+  flex-direction: row; /* 가로로 나열 */
 }
 </style>
