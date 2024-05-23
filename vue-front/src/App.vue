@@ -2,7 +2,9 @@
   <div>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container-fluid justify-content-center">
-        <RouterLink class="navbar-brand font-weight-bold nav-link" to="/">INTERESTing</RouterLink>
+        <RouterLink class="navbar-brand nav-link" to="/">
+          <img src="./assets/interesting_logo.png" alt="" class="logo-img">
+        </RouterLink>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -63,7 +65,7 @@ const logout = () => {
 
 <style scoped>
 .navbar.bg-body-tertiary {
-  --bs-tertiary-bg-rgb: white; /* 원하는 RGB 값으로 변경 */
+  --bs-tertiary-bg-rgb: #fff; /* 원하는 RGB 값으로 변경 */
   background-color: rgb(var(--bs-tertiary-bg-rgb)) !important;
 }
 
@@ -108,5 +110,10 @@ const logout = () => {
 .navbar-nav {
   display: flex;
   flex-direction: row; /* 가로로 나열 */
+}
+
+.logo-img{
+  width: 130px;
+  padding-left: 20px;
 }
 </style>

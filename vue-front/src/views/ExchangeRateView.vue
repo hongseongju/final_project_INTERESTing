@@ -3,8 +3,6 @@
         <Exchange />        
     </div>
 </template>
-
-
 <script setup>
 import Exchange from '../components/Exchange.vue'
 </script>

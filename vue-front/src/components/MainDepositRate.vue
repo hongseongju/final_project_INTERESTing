@@ -3,7 +3,7 @@
       <h2 class="mb-2">예금 명예의 전당👑</h2>
       <div v-if="topFinancialProducts.length > 0">
         <div>
-          <h5>오늘 "{{ topFinancialProduct.fin_prdt_nm }}" 가입하면 이자가 {{ topFinancialProductInterest }}원! (세전, 백만원 기준)</h5>
+          <h5 class="m-3">오늘 "{{ topFinancialProduct.fin_prdt_nm }}" 가입하면 이자가 {{ topFinancialProductInterest }}원! (세전, 백만원 기준)</h5>
         </div>
         <div class="parent">
           <ul>
@@ -12,7 +12,10 @@
               <div class="card-body p-3">
                 <h5>{{ product.fin_prdt_nm }}</h5>
               <div v-if="product.options && product.options.length > 0">
-                <p class="card-text">금리 {{ min_deposit(product.options) }}% ~ {{ max_deposit(product.options) }}%</p>
+                <div class="product-details">
+                <img :src="`/src/assets/bank_img/${product.kor_co_nm}.png`" alt="" class="product-image">
+                <h6>금리 {{ min_deposit(product.options) }}% ~ {{ max_deposit(product.options) }}%</h6>
+              </div>
             </div>
               </div>
               </RouterLink>
@@ -137,6 +140,12 @@ h5 {
   color: #2c3e50;
 }
 
+h6 {
+  font-weight: bold;
+  color: #2c3e50;
+  padding-top: 15px;
+}
+
 ul {
 list-style-type: none;
 padding: 0;
@@ -168,6 +177,16 @@ background-color: #FAFFEE;
     border: none;
 }
 
+.product-details {
+  display: flex; /* 이미지와 금리를 가로로 정렬 */
+  align-items: center; /* 세로 중앙 정렬 */
+}
+
+.product-image {
+  margin-right: 10px; 
+  width: 50px;
+  height: 50px;
+}
 .main-bar {
 position: relative;
 font-size: 1.5rem;
@@ -186,4 +205,7 @@ box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
 cursor: pointer;
 }
 
+a.nav-link {
+    text-decoration: none;
+}
 </style>
