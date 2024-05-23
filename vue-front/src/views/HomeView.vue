@@ -1,11 +1,6 @@
 <template>
   <main>
-    <article class="article-margin">
-      <div>
-        <h4>각티슈 뽑듯 간편하게</h4>
-        <h1>INTERESTing(´▽`ʃ♡ƪ)</h1>
-      </div>
-    </article>
+    <img src="../assets/mainmain2.png" alt="Main Text Logo" class="logo-image">
   <article class="dark">
     <div class="margin">
     <h1>내일이 더 기대되는 금융</h1>
@@ -80,6 +75,16 @@ main {
 .light-green {
 background-color: #FAFFEE;
 } */
+
+.logo-image {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 이미지를 요소 크기에 맞게 조정 */
+  z-index: -3; /* 이미지가 텍스트 뒤로 가도록 설정 */
+}
+
 
 .text-dark-blue {
   color: #01415B;
