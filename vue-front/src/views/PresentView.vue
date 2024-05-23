@@ -14,7 +14,7 @@
 import { computed, onMounted } from 'vue';
 import { useAuthStore } from '@/stores/counter';
 import { RouterLink, RouterView } from 'vue-router';
-import PopularStock from '../components/PopularStock.vue'
+import PopularStock from '../components/PopularStock.vue'   
 import ArticleList from '@/components/ArticleList.vue';
 </script>
 
