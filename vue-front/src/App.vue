@@ -13,9 +13,9 @@
             <li class="nav-item">
               <RouterLink class="nav-link" to="/interest_rate">예적금 비교</RouterLink>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <RouterLink class="nav-link" to="/chat_bot">예적금 AI 추천</RouterLink>
-            </li>
+            </li> -->
             <li class="nav-item">
               <RouterLink class="nav-link" to="/present">주식 선물하기</RouterLink>
             </li>
@@ -47,6 +47,8 @@
       </div>
     </nav>
     <RouterView />
+    <img src="./assets/chatbot.png" alt="chatbot image" class="chat-button" @click="toggleModal">
+    <ChatModal :showModal="showChatModal" />
   </div>
 </template>
 
@@ -54,9 +56,17 @@
 import { computed } from 'vue';
 import { useAuthStore } from '@/stores/counter';
 import { RouterLink, RouterView } from 'vue-router';
+import { ref } from 'vue';
+import ChatModal from './components/ChatModal.vue';
 
 const authStore = useAuthStore();
 const isLogin = computed(() => authStore.isLogin);
+
+const showChatModal = ref(false);
+
+const toggleModal = () => {
+  showChatModal.value = !showChatModal.value;
+};
 
 const logout = () => {
   authStore.logout();
@@ -65,17 +75,17 @@ const logout = () => {
 
 <style scoped>
 .navbar.bg-body-tertiary {
-  --bs-tertiary-bg-rgb: #fff; /* 원하는 RGB 값으로 변경 */
+  --bs-tertiary-bg-rgb: #fff;
   background-color: rgb(var(--bs-tertiary-bg-rgb)) !important;
 }
 
 .navbar-nav .nav-link {
-  color: #01415B; /* 텍스트 색상 변경 */
+  color: #01415B;
   font-weight: bold;
   position: relative;
-  padding-bottom: 5px; /* 하단 패딩 추가 */
+  padding-bottom: 5px;
   transition: color 0.3s ease;
-  text-decoration: none; /* 링크 밑줄 제거 */
+  text-decoration: none;
 }
 
 .navbar-nav .nav-link::after {
@@ -84,17 +94,17 @@ const logout = () => {
   left: 0;
   bottom: 0;
   width: 0;
-  height: 3px; /* 네모바의 높이 */
-  background-color: #01415B; /* 네모바의 색상 */
+  height: 3px;
+  background-color: #01415B;
   transition: width 0.3s ease;
 }
 
 .navbar-nav .nav-link:hover::after {
-  width: 100%; /* 호버 시 네모바의 너비 */
+  width: 100%;
 }
 
 .navbar-toggler {
-  border-color: #fff !important; /* 토글 버튼 테두리 색상 변경 */
+  border-color: #fff !important;
 }
 
 .font-weight-bold {
@@ -104,16 +114,26 @@ const logout = () => {
 
 .navbar-collapse {
   display: flex;
-  justify-content: center; /* 중앙 정렬 */
+  justify-content: center;
 }
 
 .navbar-nav {
   display: flex;
-  flex-direction: row; /* 가로로 나열 */
+  flex-direction: row;
 }
 
-.logo-img{
+.logo-img {
   width: 130px;
   padding-left: 20px;
+}
+
+.chat-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px; /* 이미지 크기 조정 */
+  height: 50px;
+  cursor: pointer;
+  z-index: 1000;
 }
 </style>

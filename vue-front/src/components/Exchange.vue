@@ -1,35 +1,32 @@
 <template>
     <header>
-        <div>
-        <h1>환율 계산</h1>
-        <select v-model="selectedExchange">
-            <option :value="null">국가를 선택하세요</option>
-            <option v-for="exchange in exchanges" :value="exchange"
-            :key="exchange.id">
-            {{  exchange.cur_nm  }}
-            </option>
-        </select>
-        <input type="text" v-model.number="amount" placeholder="환전할 금액">{{ selectedExchange?.cur_unit }}은 {{ calculateResult }}원(\) 입니다
-    </div>
+        <div class="m-4">
+            <h1>환율 계산</h1>
+            <select v-model="selectedExchange" class="custom-border">
+                <option :value="null">국가를 선택하세요</option>
+                <option v-for="exchange in exchanges" :value="exchange" :key="exchange.id">
+                    {{ exchange.cur_nm }}
+                </option>
+            </select>
+            |
+            <input type="text" v-model.number="amount" placeholder="환전할 금액" class="custom-border">
+            {{ selectedExchange?.cur_unit }}은 {{ calculateResult }}원(₩) 입니다.
+        </div>
     </header>
 
-    <div>
-        <h3>오늘의 환율</h3>
-        <ul v-if="exchanges.length">
-            <div class="row">
-                <div v-for="exchange in exchanges" :key="exchange.id" class="col">
-                    <div class="card" style="width: 18rem;">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                <img :src="`/src/assets/flags/${exchange.id}.png`" alt="national image">
-                                {{ exchange.cur_nm }}[{{ exchange.cur_unit }}]</h5>
-                            <h4 class="card-text">{{ exchange.deal_bas_r }} </h4>
-                        </div>
-                    </div>
-                    <!-- {{ exchange }} <br> -->
+    <div class="m-4">
+        <h4>오늘의 환율</h4>
+        <div class="card-container">
+            <div v-for="exchange in exchanges" :key="exchange.id" class="card">
+                <div class="card-body m-3">
+                    <h5 class="card-title">
+                        <img :src="`/src/assets/flags/${exchange.id}.png`" alt="national image">
+                        {{ exchange.cur_nm }}[{{ exchange.cur_unit }}]
+                    </h5>
+                    <h4 class="card-text">{{ exchange.deal_bas_r }}</h4>
                 </div>
+            </div>
         </div>
-        </ul>
     </div>
 </template>
 
@@ -67,7 +64,6 @@ const calculateResult = computed(() => {
     }
     return 0
 })
-
 </script>
 
 <style scoped>
@@ -75,20 +71,78 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 10px;
+  background-color: #f8f8f8;
+  border-bottom: 1px solid #e2e2e2;
 }
 
-img {
-    width: 30px;
-    height: 30px;
+header h1 {
+  margin: 0;
+  font-size: 24px;
 }
-select {
-    text-align:center;
-    width:150px;
-    height:20px;
+
+header .m-4 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
-input {
-    text-align:center;
-    width:100px;
-    height:20px;
+
+.custom-border {
+  border: 1px solid #e2e2e2;
+  padding: 5px;
+  height: 41px;
+  width: 250px;
+  border-radius: 3px;
+}
+
+h4 {
+    text-align: center;
+    margin: 29px;
+    color: #333;
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.card {
+  width: 18rem;
+  border: 1px solid #e2e2e2;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.card-body {
+  padding: 10px;
+  height: 100px;
+}
+
+.card-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-size: 16px; /* 폰트 크기 조정 */
+  font-weight: bold; /* 폰트 굵기 조정 */
+}
+
+.card-title img {
+  width: 30px;
+  height: 30px;
+}
+
+.card-text {
+  font-size: 18px; /* 폰트 크기 조정 */
+  font-style: italic; 
+  margin: 10px 0 0;
+}
+
+input, select {
+  text-align: center;
+  width: 150px;
+  height: 20px;
 }
 </style>
