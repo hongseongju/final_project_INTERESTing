@@ -59,7 +59,7 @@
 - 구현 전 예상 ERD
 ![Image](readme_img/ERD수정전.png)
 - 수정 ERD
-![Image](readme_img/ERD수정후.png)
+![Image](readme_img/ERD수정후1.png)
 
 ---
 ## 4. OpenAI 챗봇을 활용한 금융 상품 추천 알고리즘
@@ -145,6 +145,7 @@
 - allauth 회원 관리 라이브러리를 사용해 구성
 - 필드 구성: 아이디, 닉네임, 이메일, 가입한 상품 목록
 ![Image](readme_img/회원가입1.png)
+![Image](readme_img/profile1.png)
 
 
 ### 예적금 금리 비교
@@ -228,13 +229,7 @@ const calculateResult = computed(() => {
 ![Image](readme_img/주식커뮤니티2.png)  
 - 게시글 및 댓글
 ![Image](readme_img/주식커뮤니티3.png)
-- 
-- 
-- 
 
-### 프로필 페이지  (수정필요)
--
--
 
 
 ## 6. 후기
