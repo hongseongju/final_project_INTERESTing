@@ -34,7 +34,7 @@ db_list = [
 for db in db_list:
     # 상품 정보 등록
     if 'product' in db:
-        cursor.execute(f"SELECT fin_prdt_cd, fin_co_no, kor_co_nm, fin_prdt_nm, spcl_cnd FROM {db}")
+        cursor.execute(f"SELECT fin_prdt_cd, kor_co_nm, fin_prdt_nm, spcl_cnd FROM {db}")
     # 옵션 정보 등록
     if db == 'savings_optionlist':
         cursor.execute(f'SELECT fin_prdt_cd, rsrv_type_nm, save_trm, intr_rate, intr_rate2  FROM {db}')
@@ -76,15 +76,14 @@ def chat_bot(request):
     )
     
     if '은행' in input_message and '추천' in input_message:
-        # print(product_info)
-        # print(deposit_info)
         chat_history.append(
             {"role": "system", "content": f"만약 은행을 추천한다면 {product_info}에 기반해서 kor_co_nm와 fin_prdt_nm를 3개 추천해줘."}
         )
     elif '은행' in input_message:
         chat_history.append(
-            {"role": "system", "content": f"만약 은행에 대해 물어보면 {product_info}의 kor_co_nm 정보에 기반해서 5개 정도 알려줘."}
+            {"role": "system", "content": f"만약 은행에 대해 물어보면 {product_info}의 kor_co_nm만 5개 정도 알려줘."}
         )
+        
     if '예금' in input_message and  '적금' in input_message and '추천' in input_message:
         chat_history.append(
             {"role": "system", "content": f"만약 예금, 적금 상품을 추천한다면 {input_message}와 {product_info}의 spcl_cnd 정보에 기반해서 예금, 적금 상품을 합쳐서 3개 정도 추천해줘."}
@@ -101,10 +100,6 @@ def chat_bot(request):
     if '금리' in input_message:
         chat_history.append(
             {"role": "system", "content": f"만약 금리를 물어봤는데 금융상품인 fin_prdt_nm를 선택 안했다면 어떤 상품으로 조회할지 먼저 물어봐 줘. fin_prdt_nm를 선택했다면 {deposit_info}에 기반해서 물어본 savings_info의 최저금리 intr_rate와 최고금리 intr_rate2를 알려줘."}
-        )
-    if '결혼' in input_message:
-        chat_history.append(
-    {"role": "system", "content": f"만약 결혼에 대해 물어보면 {product_info}의 spcl_cnd 정보에 기반해서 상품을 2개 정도 추천해줘."}
         )
     print('중간지점')
     try:
