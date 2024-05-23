@@ -1,11 +1,11 @@
 <template>
   <main>
-    <div class="text-container">
-      <h4>각티슈 뽑듯 간편하게</h4>
-      <h1>INTERESTing(´▽`ʃ♡ƪ)</h1>
-    </div>
-  </main>
-
+    <article class="article-margin">
+      <div>
+        <h4>각티슈 뽑듯 간편하게</h4>
+        <h1>INTERESTing(´▽`ʃ♡ƪ)</h1>
+      </div>
+    </article>
   <article class="dark">
     <div class="margin">
     <h1>내일이 더 기대되는 금융</h1>
@@ -57,6 +57,7 @@
   </div>
 </div>
   </article>
+</main>
 </template>
 
 
@@ -67,33 +68,26 @@ import MainSavingsRate from '../components/MainSavingsRate.vue'
 
 <style scoped>
 main {
-  background-image: linear-gradient(30deg, #e3f8b6, #cadf2a, #808d1b);
-  padding-top: 200px; 
-  padding-bottom: 1000px;
-
+  background-image: url('../assets/main_background.png');
+  background-size: cover; /* 이미지 완전히 덮기 */
+  background-position: center; /* 중앙에 위치 */
 }
 
-.text-container {
-    position: absolute; /* 절대 위치 설정 */
-    top: 40%; /* 세로 이동 */
-    left: 20%; /* 가로 이동 */
-    transform: translate(-50%, -50%);     
-}
-.dark{
+/* .dark{
   background-color: #01415B;
-}
-
+} */
+/* 
 .light-green {
 background-color: #FAFFEE;
-}
+} */
 
 .text-dark-blue {
   color: #01415B;
 }
-article {
 
-  padding-top: 200px; 
-  padding-bottom: 500px;
+article {
+  padding-top: 600px; 
+  padding-bottom: 600px;
   text-align: center;
 }
 

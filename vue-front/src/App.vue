@@ -65,11 +65,12 @@ const logout = () => {
 
 <style scoped>
 .navbar.bg-body-tertiary {
-  --bs-tertiary-bg-rgb: 1, 65, 91; /* 원하는 RGB 값으로 변경 */
+  --bs-tertiary-bg-rgb: white; /* 원하는 RGB 값으로 변경 */
   background-color: rgb(var(--bs-tertiary-bg-rgb)) !important;
 }
 .navbar-nav .nav-link {
-  color: #fff !important; /* 텍스트 색상 변경 */
+  color: #005148 !important; /* 텍스트 색상 변경 */
+  font-weight: bold;
 }
 .navbar-nav .nav-link:hover {
   color: #CCEA8D !important; /* 링크 호버 색상 변경 */
