@@ -31,7 +31,7 @@
 
 ### ♟️예상 Sequence Diagram (경로)
 - 예적금 비교 Sequence Digram
-![Image](readme_img/예적금비교sequence_diagram.png)
+  ![Image](readme_img/예적금비교sequence_diagram.png)
   - (완료) 예적금 금리 비교 조회 구현
   - (완료) 예적금 상세 정보 구현
   - (미완료) 사용자 예산 변경에 따른 예상 이자 반환
@@ -53,7 +53,10 @@
 - INTERESTing: 고객에게 경쟁력있는 금융 상품 추천 가능, 대한민국 국민에게 주식의 관심도 증가 기대
 
 ## 3. 데이터베이스 모델링(ERD)
-![Image](readme_img/INTERESTing_ERD.png)
+- 구현 전 예상 ERD
+![Image](readme_img/ERD수정전.png)
+- 수정 ERD
+![Image](readme_img/ERD수정후.png)
 
 ---
 ## 4. OpenAI 챗봇을 활용한 금융 상품 추천 알고리즘
