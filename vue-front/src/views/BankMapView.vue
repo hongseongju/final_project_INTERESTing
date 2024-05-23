@@ -1,35 +1,36 @@
 <template>
   <header>
     <div class="m-4">
-    <h1>주변 은행 검색</h1>
-    <div class="m-4">
+      <h1>근처 은행 검색</h1>
+      <div class="m-4">
         <select v-model="result" id="keyword" class="custom-border">
           <option value="" selected disabled>은행 선택</option>
           <option v-for="(bank, index) in banks" :key="index" :value="bank">
-          {{ bank }}
+            {{ bank }}
           </option>
-        </select>  |  
+        </select>
+        |
         <input type="text" id="region" size="20" placeholder="내 근처 지역 입력" class="custom-border" />
-        <button @click="searchPlaces" class="custom-border">검색하기</button>
+        <button @click="searchPlaces" class="custom-border">&nbsp;&nbsp;찾기&nbsp;&nbsp;</button>
       </div>
     </div>
   </header>
   <!-- 카카오맵 출력 부분 -->
   <main>
-    <div class="container custom-border">
+
       <div id="menu_wrap" class="bg_white">
         <div class="option">
         </div>
       </div>
+
+    <div class="flex">
+      <div id="map" class="map child"></div>
+      <div> 
+        <ul id="placesList"></ul>
+        <div id="pagination"></div>
+      </div>
     </div>
-  <div class="flex">
-    <div id="map" class="map child"></div>
-    <div>
-      <div id="pagination"></div>
-      <ul id="placesList"></ul>
-    </div>
-  </div>
-</main>
+  </main>
 </template>
 
 <script>
@@ -108,7 +109,7 @@ export default {
       const endIndex = Math.min(startIndex + maxItemsPerPage, places.length);
       
 
-      places.forEach((place, i) => {
+      places.reverse().forEach((place, i) => {
         const placePosition = new kakao.maps.LatLng(place.y, place.x);
         const marker = this.addMarker(placePosition, i);
         const itemEl = this.getListItem(i, place);
@@ -204,40 +205,111 @@ export default {
 };
 </script>
 
-
 <style>
+body {
+  font-family: 'Arial', sans-serif;
+}
+
 header {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.container {
-  display: flex;
-}
-.map {
-  width: 600px;
-  height: 600px;
-}
-
-.option {
-  padding: 10px 10px 0;
-}
-#placesList .item {
   padding: 10px;
+  background-color: #f8f8f8;
   border-bottom: 1px solid #e2e2e2;
 }
 
-#pagination a {
-  margin: 0 2px;
-  padding: 3px 6px;
+header h1 {
+  margin: 0;
+  font-size: 24px;
+}
+
+header .m-4 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.custom-border {
   border: 1px solid #e2e2e2;
+  padding: 5px;
+  border-radius: 3px;
+}
+
+.container {
+  margin-top: 20px;
+  padding: 10px;
+}
+
+.map {
+  width: 500px;
+  height: 600px;
+  border: 1px solid #e2e2e2;
+  margin-right: 20px;
+}
+
+#placesList {
+  list-style: none;
+  padding: 0;
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.item {
+  padding: 10px;
+  border-bottom: 1px solid #e2e2e2;
+  cursor: pointer;
+}
+
+.item:hover {
+  background-color: #f1f1f1;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+}
+
+.info h5 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.info span {
+  font-size: 14px;
+  color: #555;
+}
+
+.jibun {
+  margin-left: 5px;
+  color: #999;
+}
+
+#pagination {
+  margin-top: 10px;
+  text-align: center;
+}
+
+#pagination a {
+  display: inline-block;
+  margin: 0 2px;
+  padding: 5px 10px;
+  border: 1px solid #ddd;
   color: #333;
   text-decoration: none;
   cursor: pointer;
+  border-radius: 3px;
+}
+
+#pagination a.on {
+  border-color: #0066ff;
+  color: #0066ff;
+  font-weight: bold;
 }
 
 .flex {
   display: flex;
+  justify-content: center;
+  margin: 0 auto;
 }
 </style>

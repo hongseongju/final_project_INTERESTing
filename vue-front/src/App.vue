@@ -20,7 +20,7 @@
               <RouterLink class="nav-link" to="/present">주식 선물하기</RouterLink>
             </li>
             <li class="nav-item">
-              <RouterLink class="nav-link" to="/bank_map">내 주변 은행</RouterLink>
+              <RouterLink class="nav-link" to="/bank_map">내 근처 은행</RouterLink>
             </li>
             <li class="nav-item">
               <RouterLink class="nav-link" to="/exchange_rate">환율 계산기</RouterLink>
